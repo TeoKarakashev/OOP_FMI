@@ -5,7 +5,6 @@ class MyString {
 	char* str;
 	size_t size;
 
-
 	void free();
 	void copyFrom(const MyString& other);
 public:
@@ -22,5 +21,8 @@ public:
 	char operator[](size_t index) const; 
 	bool operator<(const MyString& other);
 
+	char* getStr() const;
+
 	friend std::ostream& operator<<(std::ostream& stream, const MyString& str);
+	friend std::istream& operator>>(std::istream& stream,  MyString& str);
 };

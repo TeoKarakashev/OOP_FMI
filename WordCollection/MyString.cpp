@@ -83,10 +83,24 @@ bool MyString::operator<(const MyString& other)
 	return strcmp(str, other.str) == -1;
 }
 
+char* MyString::getStr() const
+{
+	return str;
+}
+
 
 std::ostream& operator<<(std::ostream& stream, const MyString& str) {
 	for (int i = 0; i < str.size; i++) {
 		stream << str[i];
 	}
+	return stream;
+}
+
+std::istream& operator>>(std::istream& stream,  MyString& str)
+{
+	char word[100];
+	std::cin >> word;
+	MyString temp(word);
+	str = temp;
 	return stream;
 }

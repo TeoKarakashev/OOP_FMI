@@ -11,6 +11,7 @@ void Product::copyFrom(const Product& other){
 
 }
 Product::Product() {
+	name = nullptr;
 }
 Product::Product(const char* name){
 	this->name = new char[strlen(name) + 1];

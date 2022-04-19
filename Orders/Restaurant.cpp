@@ -25,15 +25,58 @@ void Restaurant::resize() {
 	products = temp;
 }
 
+int Restaurant::closest(int v)
+{
+	v--;
+	v |= v >> 1;
+	v |= v >> 2;
+	v |= v >> 4;
+	v |= v >> 8;
+	v |= v >> 16;
+	v++;
+	return v;
+}
 
 
-Restaurant::Restaurant(const Product* prods, int size) {
-	products = new Product[size];
-	for (int i = 0; i < size; i++) {
-		products[i] = prods[i];
+Restaurant::Restaurant(){
+	strcpy(name, "Unknown");
+	products = new Product[2];
+	productCount = 0;
+	productCapacity = 2;
+}
+
+void Restaurant::add(const Product& product){
+	if (productCount == productCapacity) {
+		resize();
 	}
-	strcpy(name, "Glovo");
-	productCount = size;
-	productCapacity = size + 1;
+	products[productCount++] = product;
+}
 
+Restaurant::Restaurant(char* name) {
+	products = new Product[2];
+	strcpy(name, this->name);
+	productCount = 0;
+	productCapacity = 2;
+}
+
+Restaurant::Restaurant(const Restaurant& other){
+	copyFrom(other);
+}
+
+Restaurant& Restaurant::operator=(const Restaurant& other)
+{
+	if (this != &other) {
+		free();
+		copyFrom(other);
+	}
+	return *this;
+}
+
+Restaurant::~Restaurant(){
+	free();
+}
+
+bool Restaurant::operator==(const Restaurant& other)
+{
+	return strcmp(name, other.name);
 }

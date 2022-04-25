@@ -1,15 +1,19 @@
 #pragma once
 #include "MyString.h"
 #include "MyDate.h"
+#include "Location.h"
 
 class Product {
 	MyString name;
-	Date expireDate;
 	Date entryDate;
+	Date expireDate;
 	MyString manufacturer;
 	size_t quantity;
-	MyString location;
+	Location location;
 	//ToDo figure out how to store the location
 	MyString comment;
 
+public:
+	Product();
+	Product(const MyString& name, const char* entryDate, const char* expireDate, const MyString& manufacturer, size_t quantity, const MyString& comment);
 };

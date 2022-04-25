@@ -1,4 +1,5 @@
 #pragma once
+#include<iostream>
 
 class MyString {
 	char* vals;
@@ -9,11 +10,10 @@ class MyString {
 
 public:
 	//constructors
-	MyString();
 	MyString(const char* vals);
 	MyString(const MyString& other);
 	MyString& operator=(const MyString& other);
 	~MyString();
 
-
+	friend std::ostream& operator<<(std::ostream& stream, const MyString& str);
 };

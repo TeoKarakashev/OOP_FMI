@@ -1,0 +1,4 @@
+apple|2022-04-15|2023-04-15|Foxconn|15|A|1|1|15|red apples
+banana|2022-04-13|2023-04-13|Dole Food|10|B|1|1|10|tasty bananas
+strawberies|2021-09-15|2022-09-15|FarmShop|40|S|1|1|40|A class strawberies
+cola|2020-04-15|2030-04-15|coca-cola|20|C|1|1|20|classic cola

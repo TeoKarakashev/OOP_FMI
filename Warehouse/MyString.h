@@ -10,10 +10,14 @@ class MyString {
 
 public:
 	//constructors
+	MyString();
 	MyString(const char* vals);
 	MyString(const MyString& other);
-	MyString& operator=(const MyString& other);
 	~MyString();
+
+	MyString& operator=(const MyString& other);
+	char operator[](int index) const;
+	size_t getSize() const;
 
 	friend std::ostream& operator<<(std::ostream& stream, const MyString& str);
 };

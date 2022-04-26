@@ -12,6 +12,9 @@ void MyString::free() {
 	delete[] vals;
 }
 
+MyString::MyString() {
+}
+
 MyString::MyString(const char* vals) {
 	size = strlen(vals);
 	this->vals = new char[size + 1];
@@ -31,8 +34,19 @@ MyString& MyString::operator=(const MyString& other) {
 	return *this;
 }
 
+char MyString::operator[](int index) const {
+	if (index < 0 || index >= size) {
+		throw "Invalid index";
+	}
+	return vals[index];
+}
+
 MyString::~MyString(){
 	free();
+}
+
+size_t MyString::getSize() const {
+	return size;
 }
 
 std::ostream& operator<<(std::ostream& stream, const MyString& str) {

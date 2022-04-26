@@ -1,9 +1,8 @@
 #include "Storage.h"
-#include "Product.h"
 void Storage::copyFrom(const Storage& other) {
 	products = new Product[other.capacity];
-	for (int i = 0; i < other.size; i++){
-		products[i] = other.products[i];
+	for (int i = 0; i < other.size; i++) {
+		add(other.products[i]);
 	}
 	size = other.size;
 	capacity = other.capacity;
@@ -16,7 +15,7 @@ void Storage::free() {
 void Storage::resize() {
 	capacity *= 2;
 	Product* temp = new Product[capacity];
-	for (int i = 0; i < size; i++){
+	for (int i = 0; i < size; i++) {
 		temp[i] = products[i];
 	}
 	free();
@@ -29,7 +28,7 @@ Storage::Storage() {
 	capacity = 2;
 }
 
-Storage::Storage(const Storage& other){
+Storage::Storage(const Storage& other) {
 	copyFrom(other);
 }
 

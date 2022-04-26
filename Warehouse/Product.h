@@ -15,5 +15,5 @@ class Product {
 
 public:
 	Product();
-	Product(const MyString& name, const char* entryDate, const char* expireDate, const MyString& manufacturer, size_t quantity, const MyString& comment);
+	Product(const MyString& name, const MyString& entryDate, const MyString& expireDate, const MyString& manufacturer, size_t quantity, const MyString& comment);
 };

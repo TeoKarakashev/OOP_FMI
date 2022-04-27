@@ -1,4 +1,7 @@
 #include "Storage.h"
+#include <fstream>
+#include <iostream>
+
 void Storage::copyFrom(const Storage& other) {
 	products = new Product[other.capacity];
 	for (int i = 0; i < other.size; i++) {
@@ -49,4 +52,21 @@ void Storage::add(const Product& product) {
 		resize();
 	}
 	products[size++] = product;
+}
+
+void Storage::retrieveData() {
+	std::ifstream database("storage.txt");
+	if (!database.is_open()) {
+		throw "failed to load data from data base";
+	}
+	char buffer[1024];
+	while (!database.eof()) {
+		database.getline(buffer, 1024);
+		int i = 0;
+		while (buffer[i] !='\0') {
+			std::cout << buffer[i++];
+		}
+		std::cout << std::endl;
+	}
+
 }

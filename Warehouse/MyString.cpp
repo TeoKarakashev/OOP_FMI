@@ -13,6 +13,8 @@ void MyString::free() {
 }
 
 MyString::MyString() {
+	vals = nullptr;
+	size = 0;
 }
 
 MyString::MyString(const char* vals) {

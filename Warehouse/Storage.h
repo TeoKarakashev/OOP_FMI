@@ -5,6 +5,7 @@ class Storage {
 	Product* products;
 	size_t size;
 	size_t capacity;
+	friend class Controller;
 
 	void copyFrom(const Storage& other);
 	void free();
@@ -17,4 +18,5 @@ public:
 	~Storage();
 
 	void add(const Product& product);
+	void retrieveData();
 };

@@ -1,5 +1,8 @@
 #include <iostream>
-#include "MyDate.h"
+#include "Controller.h"
 int main() {
-	Date date("2023-02-29");
+	Controller controller;
+
+	controller.run();
+	
 }

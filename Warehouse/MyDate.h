@@ -12,9 +12,11 @@ class Date {
 	bool isNumber(const char ch);
 	int getIndex(const char ch);
 	bool isValidDate(int year, int month, int day);
-	void parseDate(const MyString& date, int& year, int& month, int& day);
 public:
 	Date();
 	Date(const MyString& date);
+	void parseDate(const MyString& date, int& year, int& month, int& day);
 	void setDate(const MyString& date);
+
+	friend std::ostream& operator<<(std::ostream& stream, const Date& products);
 };

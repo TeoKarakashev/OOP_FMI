@@ -9,7 +9,6 @@ class MyString {
 	void free();
 
 public:
-	//constructors
 	MyString();
 	MyString(const char* vals);
 	MyString(const MyString& other);
@@ -18,6 +17,8 @@ public:
 	MyString& operator=(const MyString& other);
 	char operator[](int index) const;
 	size_t getSize() const;
-
+	MyString substr(int startIndex, int endIndex) const ;
+	int atoi(const MyString& str) const ;
+	int convertCharToInt(const char ch) const;
 	friend std::ostream& operator<<(std::ostream& stream, const MyString& str);
 };

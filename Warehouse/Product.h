@@ -10,10 +10,20 @@ class Product {
 	MyString manufacturer;
 	size_t quantity;
 	Location location;
-	//ToDo figure out how to store the location
 	MyString comment;
 
 public:
 	Product();
-	Product(const MyString& name, const MyString& entryDate, const MyString& expireDate, const MyString& manufacturer, size_t quantity, const MyString& comment);
+	Product(const MyString& name, const Date& entryDate, const Date& expireDate,
+	const MyString& manufacturer, size_t quantity,const Location& location,  const MyString& comment);
+
+	void setName(const MyString& name);
+	void setEntryDate(const Date& entryDate);
+	void setExpireDate(const Date& expireDate);
+	void setManufacturer(const MyString& manufacturer);
+	void setQuantity(size_t quantity);
+	void setLocation(const Location& location);
+	void setComment(const MyString& comment);
+
+	friend std::ostream& operator<<(std::ostream& stream, const Product& products);
 };

@@ -13,3 +13,8 @@ Location::Location(char section, unsigned shelf, unsigned startPosition, unsigne
 	this->startPosition = startPosition;
 	this->endPosition = endPosition;
 }
+
+std::ostream& operator<<(std::ostream& stream, const Location& location) {
+	stream << location.section << location.shelf << location.startPosition << location.endPosition;
+	return stream;
+}

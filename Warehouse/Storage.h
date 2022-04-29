@@ -10,6 +10,8 @@ class Storage {
 	void copyFrom(const Storage& other);
 	void free();
 	void resize();
+	Product	parse(const MyString& str);
+	int* findAllDelimeters(const MyString& str, int*& arr);
 
 public:
 	Storage();
@@ -19,4 +21,6 @@ public:
 
 	void add(const Product& product);
 	void retrieveData();
+
+	friend std::ostream& operator<<(std::ostream& stream, const Storage& products);
 };

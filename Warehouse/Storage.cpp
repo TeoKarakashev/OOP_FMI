@@ -25,6 +25,37 @@ void Storage::resize() {
 	products = temp;
 }
 
+Product Storage::parse(const MyString& str) {
+	int* delimeters = new int[9];
+	findAllDelimeters(str, delimeters);
+	MyString name = str.substr(0, delimeters[0]);
+	Date entryDate(str.substr(delimeters[0] + 1, delimeters[1]));
+	Date expireDate(str.substr(delimeters[1] + 1, delimeters[2]));
+	MyString manufacturer = str.substr(delimeters[2] + 1, delimeters[3]);
+	size_t quantity = str.atoi(str.substr(delimeters[3] + 1, delimeters[4]));
+	char section = str.substr(delimeters[4] + 1, delimeters[5])[0];
+	unsigned shelf = str.atoi(str.substr(delimeters[5] + 1, delimeters[6]));
+	unsigned startPos = str.atoi(str.substr(delimeters[6] + 1, delimeters[7]));
+	unsigned endPos = str.atoi(str.substr(delimeters[7] + 1, delimeters[8]));
+	Location location(section, shelf, startPos, endPos);
+	MyString comment = str.substr(delimeters[8] + 1, str.getSize());
+	delete[] delimeters;
+	return Product(name, entryDate, expireDate, manufacturer, quantity, location, comment);
+}
+
+int* Storage::findAllDelimeters(const MyString& str, int*& arr) {
+	int arrSize = 0;
+	for (size_t i = 0; i < str.getSize(); i++) {
+		if (str[i] == '|') {
+			arr[arrSize++] = i;
+		}
+		if (arrSize == 9) {
+			return arr;
+		}
+	}
+	return arr;
+}
+
 Storage::Storage() {
 	products = new Product[2];
 	size = 0;
@@ -62,11 +93,14 @@ void Storage::retrieveData() {
 	char buffer[1024];
 	while (!database.eof()) {
 		database.getline(buffer, 1024);
-		int i = 0;
-		while (buffer[i] !='\0') {
-			std::cout << buffer[i++];
-		}
-		std::cout << std::endl;
+		Product p = parse(buffer);
+		add(p);
 	}
+}
 
+std::ostream& operator<<(std::ostream& stream, const Storage& storage) {
+	for (int i = 0; i < storage.size; i++){
+		stream << storage.products[i]<<std::endl;
+	}
+	return stream;
 }

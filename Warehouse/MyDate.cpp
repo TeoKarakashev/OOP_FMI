@@ -58,6 +58,7 @@ void Date::setDate(const MyString& date) {
 }
 
 void Date::parseDate(const MyString& date, int& year, int& month, int& day) {
+
 	for (int i = 0; i < 10; i++) {
 		if (i == 4 || i == 7) {
 			continue;
@@ -79,4 +80,10 @@ void Date::parseDate(const MyString& date, int& year, int& month, int& day) {
 			day += getIndex(date[i]);
 		}
 	}
+}
+
+std::ostream& operator<<(std::ostream& stream, const Date& date)
+{
+	stream << date.year << "-" << date.month << "-" << date.day;
+	return stream;
 }

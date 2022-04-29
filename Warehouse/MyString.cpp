@@ -51,6 +51,37 @@ size_t MyString::getSize() const {
 	return size;
 }
 
+MyString MyString::substr(int startIndex, int endIndex) const {
+	if (endIndex < startIndex) {
+		throw "substr cannot have negative size";
+	}
+	int size = endIndex - startIndex;
+	char* substr = new char[size + 1];
+	int strSize = 0;
+	for (int i = startIndex; i < endIndex; i++){
+		substr[strSize++] = vals[i];
+	}
+	substr[strSize++] = '\0';
+	return MyString(substr);
+}
+
+int MyString::atoi(const MyString& str) const {
+	int res = 0;
+	for (int i = 0; i < str.getSize(); i++) {
+		res *= 10;
+		res += convertCharToInt(str[i]);
+	}
+	return res;
+}
+
+int MyString::convertCharToInt(const char ch) const
+{
+	if (ch < '0' || ch > '9') {
+		throw "invalid char";
+	}
+		return ch - '0';
+}
+
 std::ostream& operator<<(std::ostream& stream, const MyString& str) {
 	stream << str.vals;
 	return stream;

@@ -99,9 +99,9 @@ StyleCopReport.xml
 *.scc
 
 # my stuff, remove if needed
-*.vcxproj
-*.vcxproj.filters
-*.sln
+#*.vcxproj
+#*.vcxproj.filters
+#*.sln
 
 # Chutzpah Test files
 _Chutzpah*

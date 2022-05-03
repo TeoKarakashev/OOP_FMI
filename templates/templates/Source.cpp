@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include "Stack.hpp"
 template <typename T>
 void merge(T* arr1, int size1, T* arr2, int size2) {
 	int newArrLength = size1 + size2;
@@ -45,10 +45,15 @@ void mergeSort(T* arr, int size) {
 
 int main() {
 
-	int* arr = new int[10]{ 15, 19, 8 , 15, 7, 20, -2, 5, 9, 114 };
+	/*int* arr = new int[10]{ 15, 19, 8 , 15, 7, 20, -2, 5, 9, 114 };
 	mergeSort<int>(arr, 10);
 	for (size_t i = 0; i < 10; i++) {
 		std::cout << arr[i] << " ";
 	}
-	delete[] arr;
+	delete[] arr;*/
+
+	Stack<int> stack;
+	stack.push(15);
+	int a = 5;
+	stack.push(a);
 }

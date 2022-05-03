@@ -2,5 +2,5 @@
 
 int main() {
 
-	std::cout << "Gitignore test";
+	std::cout << "Gitignore test2";
 }

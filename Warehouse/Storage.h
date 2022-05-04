@@ -12,6 +12,11 @@ class Storage {
 	void resize();
 	Product	parse(const MyString& str);
 	int* findAllDelimeters(const MyString& str, int*& arr);
+	void assignLocation(Product& product, bool& wasAddedToAnotherProduct);
+	int contains(const Product& products);
+	int nextEmptyShelf(char& section);
+	void flush();
+	bool hasEnoughSpaceOnShelf(const Location& location, const size_t quantity);
 
 public:
 	Storage();
@@ -19,7 +24,7 @@ public:
 	Storage& operator=(const Storage& other);
 	~Storage();
 
-	void add(const Product& product);
+	void add(Product& product);
 	void retrieveData();
 
 	friend std::ostream& operator<<(std::ostream& stream, const Storage& products);

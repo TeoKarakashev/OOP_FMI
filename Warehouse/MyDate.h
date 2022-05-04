@@ -17,6 +17,9 @@ public:
 	Date(const MyString& date);
 	void parseDate(const MyString& date, int& year, int& month, int& day);
 	void setDate(const MyString& date);
+	bool operator>(const Date& other);
+	bool operator==(const Date& other);
 
-	friend std::ostream& operator<<(std::ostream& stream, const Date& products);
+	friend std::ostream& operator<<(std::ostream& stream, const Date& date);
+	friend std::istream& operator>>(std::istream& stream, Date& date);
 };

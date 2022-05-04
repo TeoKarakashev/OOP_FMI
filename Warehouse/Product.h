@@ -17,6 +17,9 @@ public:
 	Product(const MyString& name, const Date& entryDate, const Date& expireDate,
 	const MyString& manufacturer, size_t quantity,const Location& location,  const MyString& comment);
 
+	Product(const MyString& name, const Date& entryDate, const Date& expireDate,
+		const MyString& manufacturer, size_t quantity, const MyString& comment);
+
 	void setName(const MyString& name);
 	void setEntryDate(const Date& entryDate);
 	void setExpireDate(const Date& expireDate);
@@ -24,6 +27,11 @@ public:
 	void setQuantity(size_t quantity);
 	void setLocation(const Location& location);
 	void setComment(const MyString& comment);
+
+	MyString getName() const;
+	Date getExpireDate() const;
+	Location getLocation() const;
+	size_t getQuantity() const;
 
 	friend std::ostream& operator<<(std::ostream& stream, const Product& products);
 };

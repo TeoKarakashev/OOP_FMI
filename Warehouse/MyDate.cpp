@@ -57,6 +57,39 @@ void Date::setDate(const MyString& date) {
 	}
 }
 
+bool Date::operator>(const Date& other) {
+	if (this->year > other.year) {
+		return true;
+	}
+	else if (this->year < other.year) {
+		return false;
+	}
+	else {
+		if (this->month > other.month) {
+			return true;
+		}
+		else if (this->month > other.month) {
+			return false;
+		}
+		else {
+			if (this->day > other.day) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+}
+
+bool Date::operator==(const Date& other)
+{
+	if (year == other.year && month == other.month && day == other.day) {
+		return true;
+	}
+	return false;
+}
+
 void Date::parseDate(const MyString& date, int& year, int& month, int& day) {
 
 	for (int i = 0; i < 10; i++) {
@@ -84,6 +117,22 @@ void Date::parseDate(const MyString& date, int& year, int& month, int& day) {
 
 std::ostream& operator<<(std::ostream& stream, const Date& date)
 {
-	stream << date.year << "-" << date.month << "-" << date.day;
+	stream << date.year << "-";
+	if (date.month < 10) {
+		stream << "0";
+	}
+	stream << date.month << "-";
+	if (date.day < 10) {
+		stream << "0";
+	}
+	stream << date.day;
+	return stream;
+}
+
+std::istream& operator>>(std::istream& stream, Date& date)
+{
+	MyString str;
+	std::cin >> str;
+	date.setDate(str);
 	return stream;
 }

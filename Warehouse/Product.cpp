@@ -15,6 +15,15 @@ Product::Product(const MyString& name, const Date& entryDate, const Date& expire
 	setComment(comment);
 }
 
+Product::Product(const MyString& name, const Date& entryDate, const Date& expireDate, const MyString& manufacturer, size_t quantity, const MyString& comment) {
+	setName(name);
+	setEntryDate(entryDate);
+	setExpireDate(expireDate);
+	setManufacturer(manufacturer);
+	setQuantity(quantity);
+	setComment(comment);
+}
+
 void Product::setName(const MyString& name) {
 	this->name = name;
 }
@@ -33,6 +42,7 @@ void Product::setManufacturer(const MyString& manufacturer) {
 
 void Product::setQuantity(size_t quantity) {
 	this->quantity = quantity;
+	this->location.setEndPosition(quantity);
 }
 
 void Product::setLocation(const Location& location) {
@@ -41,6 +51,24 @@ void Product::setLocation(const Location& location) {
 
 void Product::setComment(const MyString& comment) {
 	this->comment = comment;
+}
+
+MyString Product::getName() const
+{
+	return name;
+}
+
+Date Product::getExpireDate() const {
+	return expireDate;
+}
+
+Location Product::getLocation() const {
+	return location;
+}
+
+size_t Product::getQuantity() const
+{
+	return quantity;
 }
  
 std::ostream& operator<<(std::ostream& stream, const Product& products) {

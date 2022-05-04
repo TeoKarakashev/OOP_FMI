@@ -55,7 +55,7 @@ MyString MyString::substr(int startIndex, int endIndex) const {
 	if (endIndex < startIndex) {
 		throw "substr cannot have negative size";
 	}
-	int size = endIndex - startIndex;
+
 	char* substr = new char[size + 1];
 	int strSize = 0;
 	for (int i = startIndex; i < endIndex; i++){
@@ -63,6 +63,11 @@ MyString MyString::substr(int startIndex, int endIndex) const {
 	}
 	substr[strSize++] = '\0';
 	return MyString(substr);
+}
+
+int MyString::strcmp(const MyString& other)
+{
+	return std::strcmp(this->vals, other.vals);
 }
 
 int MyString::atoi(const MyString& str) const {
@@ -82,7 +87,26 @@ int MyString::convertCharToInt(const char ch) const
 		return ch - '0';
 }
 
+char MyString::toUpper(const char ch) {
+	if (ch >= 'a' && ch <= 'z') {
+		return (ch - 'a') + 'A';
+	}
+	return ch;
+}
+
 std::ostream& operator<<(std::ostream& stream, const MyString& str) {
 	stream << str.vals;
+	return stream;
+}
+
+std::istream& operator>>(std::istream& stream, MyString& str){
+
+	delete[] str.vals;
+	char buffer[1024];
+	stream >> buffer;
+	str.size = strlen(buffer);
+	str.vals = new char[str.size + 1];
+	strcpy(str.vals, buffer);
+
 	return stream;
 }

@@ -56,6 +56,57 @@ int* Storage::findAllDelimeters(const MyString& str, int*& arr) {
 	return arr;
 }
 
+void Storage::assignLocation(Product& product, bool& wasAddedToAnotherProduct) {
+	int index = contains(product);
+	if (index != -1 && hasEnoughSpaceOnShelf(products[index].getLocation(), product.getQuantity())) {
+		products[index].setQuantity(products[index].getQuantity() + product.getQuantity());
+		wasAddedToAnotherProduct = true;
+	}
+	else {
+		char section = product.getName().toUpper(product.getName()[0]);
+		unsigned shelf = nextEmptyShelf(section);
+		unsigned startPos = 1;
+		unsigned endPos = product.getQuantity();
+		Location loc(section, shelf, startPos, endPos);
+		product.setLocation(loc);
+	}
+}
+//should find last one
+int Storage::contains(const Product& product) {
+	for (int i = 0; i < size; i++) {
+		if (products[i].getName().strcmp(product.getName()) == 0) {
+			if (products[i].getExpireDate() == product.getExpireDate()) {
+				return i;
+			}
+		}
+	}
+	return -1;
+}
+
+int Storage::nextEmptyShelf(char& section)
+{
+	int count = 1;
+	for (int i = 0; i < size; i++) {
+		if (products[i].getLocation().getSection() == section) {
+			count++;
+		}
+		if (count > MAX_SHLEFS_IN_SECTION) {
+			count = 1;
+			section++;
+			i = 0;
+		}
+	}
+	return count;
+}
+
+void Storage::flush() {
+	//ToDo
+}
+
+bool Storage::hasEnoughSpaceOnShelf(const Location& location, const size_t quantity) {
+	return quantity <= MAX_SHELF_SIZE - location.getEndPosition();
+}
+
 Storage::Storage() {
 	products = new Product[2];
 	size = 0;
@@ -78,11 +129,19 @@ Storage::~Storage() {
 	free();
 }
 
-void Storage::add(const Product& product) {
+void Storage::add(Product& product) {
+	bool wasAddedToAnotherProduct = false;
 	if (size == capacity) {
 		resize();
 	}
-	products[size++] = product;
+	if (product.getLocation().getSection() == '-') {
+		assignLocation(product, wasAddedToAnotherProduct);
+
+	}
+	if (!wasAddedToAnotherProduct) {
+		products[size++] = product;
+	}
+	flush();
 }
 
 void Storage::retrieveData() {
@@ -99,8 +158,8 @@ void Storage::retrieveData() {
 }
 
 std::ostream& operator<<(std::ostream& stream, const Storage& storage) {
-	for (int i = 0; i < storage.size; i++){
-		stream << storage.products[i]<<std::endl;
+	for (int i = 0; i < storage.size; i++) {
+		stream << storage.products[i] << std::endl;
 	}
 	return stream;
 }

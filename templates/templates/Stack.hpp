@@ -1,11 +1,11 @@
 template <typename T>
+#include <iostream>
 #include <exception>
 class Stack {
-		
+
 	T* data;
 	size_t size;
 	size_t capacity;
-	
 	size_t top;
 
 	void free();
@@ -19,7 +19,7 @@ public:
 	~Stack();
 
 	void push(const T& el);
-	void push(T&& el); 
+	void push(T&& el);
 	const T& top() const;
 	void pop();
 	bool isEmpty();
@@ -45,7 +45,7 @@ template<typename T>
 void Stack<T>::resize() {
 	capacity *= 2;
 	T newData = new T[capacity];
-	for (int i = 0; i < size; i++){
+	for (int i = 0; i < size; i++) {
 		newData[i] = data[i];
 	}
 	delete[] data;
@@ -61,12 +61,12 @@ Stack<T>::Stack() {
 }
 
 template<typename T>
-Stack<T>::Stack(const Stack& other){
+Stack<T>::Stack(const Stack& other) {
 	copyFrom(other);
 }
 
 template<typename T>
-Stack<T>& Stack<T>::operator=(const Stack& other){
+Stack<T>& Stack<T>::operator=(const Stack& other) {
 	if (this != &other) {
 		free();
 		copyFrom(other);
@@ -75,12 +75,12 @@ Stack<T>& Stack<T>::operator=(const Stack& other){
 }
 
 template<typename T>
-Stack<T>::~Stack(){
+Stack<T>::~Stack() {
 	free();
 }
 
 template<typename T>
-void Stack<T>::push(const T& el){
+void Stack<T>::push(const T& el) {
 	std::cout << "el" << std::endl;
 	if (capacity == size) {
 		resize();
@@ -90,7 +90,7 @@ void Stack<T>::push(const T& el){
 }
 
 template<typename T>
-void Stack<T>::push(T&& el){
+void Stack<T>::push(T&& el) {
 	std::cout << "move" << std::endl;
 	if (capacity == size) {
 		resize();
@@ -100,12 +100,12 @@ void Stack<T>::push(T&& el){
 }
 
 template<typename T>
-const T& Stack<T>::top() const{
-		if (isEmpty()) {
-			throw std::exception("Empty stack");
-		}
-		return data[top];
+static const T& Stack<T>::top() const {
+	if (isEmpty()) {
+		throw std::exception("Empty stack");
 	}
+	return data[top];
+}
 
 
 template<typename T>

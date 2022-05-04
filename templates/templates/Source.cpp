@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Stack.hpp"
+#include "queue.hpp"
 template <typename T>
 void merge(T* arr1, int size1, T* arr2, int size2) {
 	int newArrLength = size1 + size2;
@@ -52,8 +53,13 @@ int main() {
 	}
 	delete[] arr;*/
 
-	Stack<int> stack;
-	stack.push(15);
-	int a = 5;
-	stack.push(a);
+	//Stack<int> stack;
+	//stack.push(15);
+	//int a = 5;
+	//stack.push(a);
+
+	MyQueue<int> que;
+	que.push(15);
+	que.push(12);
+	que.push(12);
 }

@@ -74,10 +74,9 @@ void Storage::assignLocation(Product& product, bool& wasAddedToAnotherProduct) {
 //should find last one
 int Storage::contains(const Product& product) {
 	for (int i = 0; i < size; i++) {
-		if (products[i].getName().strcmp(product.getName()) == 0) {
-			if (products[i].getExpireDate() == product.getExpireDate()) {
-				return i;
-			}
+		if (products[i].getName().strcmp(product.getName()) == 0 &&
+			products[i].getExpireDate() == product.getExpireDate()) {
+			return i;
 		}
 	}
 	return -1;
@@ -100,7 +99,20 @@ int Storage::nextEmptyShelf(char& section)
 }
 
 void Storage::flush() {
-	//ToDo
+	std::ofstream database("storage.txt", std::ios::trunc);
+	if (!database.is_open()) {
+		throw "failed to open database";
+	}
+	for (int i = 0; i < size; i++) {
+		database << products[i].getName() << "|" << products[i].getEntryDate() << "|"
+			<< products[i].getExpireDate() << "|" << products[i].getManufacturer() << "|"
+			<< products[i].getQuantity() << "|" << products[i].getLocation().getSection() << "|"
+			<< products[i].getLocation().getShelf() << "|" << products[i].getLocation().getStartPosition() << "|"
+			<< products[i].getLocation().getEndPosition() << "|" << products[i].getComment();
+		if (i != size - 1) {
+			database << std::endl;
+		}
+	}
 }
 
 bool Storage::hasEnoughSpaceOnShelf(const Location& location, const size_t quantity) {
@@ -131,12 +143,12 @@ Storage::~Storage() {
 
 void Storage::add(Product& product) {
 	bool wasAddedToAnotherProduct = false;
+
 	if (size == capacity) {
 		resize();
 	}
 	if (product.getLocation().getSection() == '-') {
 		assignLocation(product, wasAddedToAnotherProduct);
-
 	}
 	if (!wasAddedToAnotherProduct) {
 		products[size++] = product;
@@ -147,13 +159,16 @@ void Storage::add(Product& product) {
 void Storage::retrieveData() {
 	std::ifstream database("storage.txt");
 	if (!database.is_open()) {
-		throw "failed to load data from data base";
+		throw "failed to load data from database";
 	}
 	char buffer[1024];
 	while (!database.eof()) {
 		database.getline(buffer, 1024);
 		Product p = parse(buffer);
-		add(p);
+		if (size == capacity) {
+			resize();
+		}
+		products[size++] = p;
 	}
 }
 

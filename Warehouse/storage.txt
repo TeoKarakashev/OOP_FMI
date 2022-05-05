@@ -1,4 +1,7 @@
-apple|2022-04-15|2023-04-15|Foxconn|15|A|1|1|15|red apples
-banana|2022-04-13|2023-04-13|Dole Food|10|B|1|1|10|tasty bananas
-strawberies|2021-09-15|2022-09-15|FarmShop|40|S|1|1|40|A class strawberies
-cola|2020-04-15|2030-04-15|coca-cola|20|C|1|1|20|clasic cola
+apple|2022-04-15|2023-04-15|Foxconn|85|A|1|1|85|red apples
+banana|2023-12-07|2024-12-08|BananaCo|15|B|1|1|15|A++ quality
+strawberies|2020-10-09|2023-10-09|Bestconn|50|S|1|1|50|tasty
+apple juice|2018-10-09|2025-10-09|teddy|70|A|2|1|70|apple juice
+cola|2010-01-02|2022-05-10|coca-cola|60|C|1|1|60|sugar
+jelly|2022-05-05|2024-05-05|zaharna fabrika|19|J|1|1|19|random coment
+apple|2022-04-15|2023-04-15|Foxconn|50|A|3|1|50|red apples

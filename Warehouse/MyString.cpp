@@ -103,7 +103,7 @@ std::istream& operator>>(std::istream& stream, MyString& str){
 
 	delete[] str.vals;
 	char buffer[1024];
-	stream >> buffer;
+	stream.getline(buffer, 1024);
 	str.size = strlen(buffer);
 	str.vals = new char[str.size + 1];
 	strcpy(str.vals, buffer);

@@ -2,7 +2,7 @@
 #include <iostream>
 
 static unsigned MAX_SHELF_SIZE = 100;
-static unsigned MAX_SHLEFS_IN_SECTION = 1;
+static unsigned MAX_SHLEFS_IN_SECTION = 12;
 
 class Location {
 	char section;

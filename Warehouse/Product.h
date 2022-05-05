@@ -29,9 +29,12 @@ public:
 	void setComment(const MyString& comment);
 
 	MyString getName() const;
+	Date getEntryDate() const;
 	Date getExpireDate() const;
-	Location getLocation() const;
+	MyString getManufacturer() const;
 	size_t getQuantity() const;
+	Location getLocation() const;
+	MyString getComment() const;
 
 	friend std::ostream& operator<<(std::ostream& stream, const Product& products);
 };

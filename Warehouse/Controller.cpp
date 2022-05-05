@@ -1,15 +1,5 @@
 #include "Controller.h"
 
-void Controller::addProduct(Storage& storage) {
-	
-	Product p = enterProduct();
-	storage.add(p);
-}
-
-void Controller::retrieveProduct(Storage& storage) {
-
-}
-
 Product Controller::enterProduct() {
 	MyString name;
 	std::cout << "enter product name: ";
@@ -36,10 +26,27 @@ Product Controller::enterProduct() {
 	return Product(name, entryDate, expireDate, manufacturer, quantity, comment);
 }
 
+void Controller::addProduct(Storage& storage) {
+	
+	Product p = enterProduct();
+	storage.add(p);
+}
+
+void Controller::retrieveProduct(Storage& storage) {
+	MyString name;
+	std::cout << "enter product name: ";
+	std::cin >> name;
+	size_t quantity;
+	std::cout << "enter quantity: ";
+	std::cin >> quantity;
+	storage.retrieveProduct(name, quantity);
+}
+
 void Controller::run() {
 	Storage storage;
 	storage.retrieveData();
 	std::cout << storage;
 	addProduct(storage);
 	std::cout << storage;
+	//retrieveProduct(storage);
 }

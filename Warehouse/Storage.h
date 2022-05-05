@@ -1,5 +1,6 @@
 #pragma once
 #include "Product.h"
+#include "Vector.h"
 
 class Storage {
 	Product* products;
@@ -11,12 +12,14 @@ class Storage {
 	void free();
 	void resize();
 	Product	parse(const MyString& str);
-	int* findAllDelimeters(const MyString& str, int*& arr);
+	Vector findAllDelimeters(const MyString& str);
 	void assignLocation(Product& product, bool& wasAddedToAnotherProduct);
-	int contains(const Product& products);
+	Vector findAll(const Product& products);
+	Vector findAll(const MyString& name);
 	int nextEmptyShelf(char& section);
 	void flush();
 	bool hasEnoughSpaceOnShelf(const Location& location, const size_t quantity);
+
 
 public:
 	Storage();
@@ -26,6 +29,7 @@ public:
 
 	void add(Product& product);
 	void retrieveData();
+	void retrieveProduct(const MyString& name, const size_t& quantity);
 
 	friend std::ostream& operator<<(std::ostream& stream, const Storage& products);
 };

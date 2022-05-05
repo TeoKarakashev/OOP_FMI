@@ -26,8 +26,7 @@ void Storage::resize() {
 }
 
 Product Storage::parse(const MyString& str) {
-	int* delimeters = new int[9];
-	findAllDelimeters(str, delimeters);
+	Vector delimeters = findAllDelimeters(str);;
 	MyString name = str.substr(0, delimeters[0]);
 	Date entryDate(str.substr(delimeters[0] + 1, delimeters[1]));
 	Date expireDate(str.substr(delimeters[1] + 1, delimeters[2]));
@@ -35,34 +34,35 @@ Product Storage::parse(const MyString& str) {
 	size_t quantity = str.atoi(str.substr(delimeters[3] + 1, delimeters[4]));
 	char section = str.substr(delimeters[4] + 1, delimeters[5])[0];
 	unsigned shelf = str.atoi(str.substr(delimeters[5] + 1, delimeters[6]));
-	unsigned startPos = str.atoi(str.substr(delimeters[6] + 1, delimeters[7]));
+	unsigned startPos = str.atoi(str.substr(delimeters[6] + 1, delimeters[7]));//ToDO make it volume
 	unsigned endPos = str.atoi(str.substr(delimeters[7] + 1, delimeters[8]));
 	Location location(section, shelf, startPos, endPos);
 	MyString comment = str.substr(delimeters[8] + 1, str.getSize());
-	delete[] delimeters;
 	return Product(name, entryDate, expireDate, manufacturer, quantity, location, comment);
 }
 
-int* Storage::findAllDelimeters(const MyString& str, int*& arr) {
-	int arrSize = 0;
+Vector Storage::findAllDelimeters(const MyString& str) {
+	Vector delimeters;
 	for (size_t i = 0; i < str.getSize(); i++) {
 		if (str[i] == '|') {
-			arr[arrSize++] = i;
-		}
-		if (arrSize == 9) {
-			return arr;
+			delimeters.add(i);
 		}
 	}
-	return arr;
+	return delimeters;
 }
 
 void Storage::assignLocation(Product& product, bool& wasAddedToAnotherProduct) {
-	int index = contains(product);
-	if (index != -1 && hasEnoughSpaceOnShelf(products[index].getLocation(), product.getQuantity())) {
-		products[index].setQuantity(products[index].getQuantity() + product.getQuantity());
-		wasAddedToAnotherProduct = true;
+	Vector indexes =  findAll(product);
+	if (!indexes.isEmpty()) {
+		for (int i = 0; i < indexes.getSize(); i++){
+			if (hasEnoughSpaceOnShelf(products[indexes[i]].getLocation(), product.getQuantity())) {
+				products[indexes[i]].setQuantity(products[indexes[i]].getQuantity() + product.getQuantity());
+				wasAddedToAnotherProduct = true;
+				break;
+			}
+		}
 	}
-	else {
+	if(!wasAddedToAnotherProduct){
 		char section = product.getName().toUpper(product.getName()[0]);
 		unsigned shelf = nextEmptyShelf(section);
 		unsigned startPos = 1;
@@ -71,15 +71,27 @@ void Storage::assignLocation(Product& product, bool& wasAddedToAnotherProduct) {
 		product.setLocation(loc);
 	}
 }
-//should find last one
-int Storage::contains(const Product& product) {
+
+Vector Storage::findAll(const Product& product) {
+	Vector indexes;
 	for (int i = 0; i < size; i++) {
 		if (products[i].getName().strcmp(product.getName()) == 0 &&
 			products[i].getExpireDate() == product.getExpireDate()) {
-			return i;
+			indexes.add(i);
 		}
 	}
-	return -1;
+	return indexes;
+}
+
+
+Vector Storage::findAll(const MyString& name) {
+	Vector indexes;
+	for (int i = 0; i < size; i++) {
+		if (products[i].getName().strcmp(name) == 0){
+			indexes.add(i);
+		}
+	}
+	return indexes;
 }
 
 int Storage::nextEmptyShelf(char& section)
@@ -170,6 +182,10 @@ void Storage::retrieveData() {
 		}
 		products[size++] = p;
 	}
+}
+
+void Storage::retrieveProduct(const MyString& name, const size_t& quantity) {
+	
 }
 
 std::ostream& operator<<(std::ostream& stream, const Storage& storage) {

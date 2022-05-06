@@ -43,10 +43,15 @@ void Controller::retrieveProduct(Storage& storage) {
 }
 
 void Controller::run() {
-	Storage storage;
-	storage.retrieveData();
-	std::cout << storage;
-	addProduct(storage);
-	std::cout << storage;
-	//retrieveProduct(storage);
+	try {
+		Storage storage;
+		storage.retrieveData();
+		std::cout << storage;
+		//addProduct(storage);
+		retrieveProduct(storage);
+		std::cout << storage;
+	}
+	catch (char*) {
+		std::cout << "error";
+	}
 }

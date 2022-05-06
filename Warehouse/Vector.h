@@ -10,9 +10,9 @@ class Vector
 	void resize();
 	void free();
 	void copyFrom(const Vector& other);
-	void swap(int& i1, int& i2);
 
 public:
+	void swap(int& i1, int& i2);
 	Vector();
 	Vector(const Vector& other);
 	Vector& operator = (const Vector& other);

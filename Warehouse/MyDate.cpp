@@ -68,7 +68,7 @@ bool Date::operator>(const Date& other) {
 		if (this->month > other.month) {
 			return true;
 		}
-		else if (this->month > other.month) {
+		else if (this->month < other.month) {
 			return false;
 		}
 		else {

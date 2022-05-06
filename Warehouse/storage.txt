@@ -1,8 +1,5 @@
-apple|2022-04-15|2023-04-15|Foxconn|70|A|1|1|70|red apples
-banana|2023-12-07|2024-12-08|BananaCo|75|B|1|1|75|A++ quality
+apple|2022-04-15|2023-04-15|Foxconn|50|A|1|1|50|red apples
 strawberies|2020-10-09|2023-10-09|Bestconn|50|S|1|1|50|tasty
 apple juice|2018-10-09|2025-10-09|teddy|70|A|2|1|70|apple juice
 cola|2010-01-02|2022-05-10|coca-cola|60|C|1|1|60|sugar
 jelly|2022-05-05|2024-05-05|zaharna fabrika|19|J|1|1|19|random coment
-apple|2022-04-15|2023-04-15|Foxconn|90|A|3|1|90|red apples
-apple pie|2022-04-15|2023-04-15|Foxconn|50|A|4|1|50|thats the com

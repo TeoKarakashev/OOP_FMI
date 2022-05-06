@@ -60,8 +60,8 @@ void Vector::add(const int element)
 	if (capacity == size) {
 		resize();
 	}
-		arr[size] = element;
-		size++;
+	arr[size] = element;
+	size++;
 }
 
 int Vector::getSize() const
@@ -97,8 +97,8 @@ bool Vector::deleteAt(int index) {
 }
 
 void Vector::sort() {
-	int minIndex = 0;
 	for (int i = 0; i < size; i++) {
+		int minIndex = i;
 		for (int j = i; j < size; j++) {
 			if (arr[j] < arr[minIndex]) {
 				minIndex = j;

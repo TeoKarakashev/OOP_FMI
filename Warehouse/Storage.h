@@ -19,6 +19,8 @@ class Storage {
 	int nextEmptyShelf(char& section);
 	void flush();
 	bool hasEnoughSpaceOnShelf(const Location& location, const size_t quantity);
+	void sortIndexesByExpireDate(Vector& indexes);
+	int sumOfProductsQuantity(Vector& indexes);
 
 
 public:
@@ -29,7 +31,8 @@ public:
 
 	void add(Product& product);
 	void retrieveData();
-	void retrieveProduct(const MyString& name, const size_t& quantity);
+	void retrieveProduct(const MyString& name, int quantity);
+	void removeAt(int index);
 
 	friend std::ostream& operator<<(std::ostream& stream, const Storage& products);
 };

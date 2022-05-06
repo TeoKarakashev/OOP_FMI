@@ -52,9 +52,9 @@ Vector Storage::findAllDelimeters(const MyString& str) {
 }
 
 void Storage::assignLocation(Product& product, bool& wasAddedToAnotherProduct) {
-	Vector indexes =  findAll(product);
+	Vector indexes = findAll(product);
 	if (!indexes.isEmpty()) {
-		for (int i = 0; i < indexes.getSize(); i++){
+		for (int i = 0; i < indexes.getSize(); i++) {
 			if (hasEnoughSpaceOnShelf(products[indexes[i]].getLocation(), product.getQuantity())) {
 				products[indexes[i]].setQuantity(products[indexes[i]].getQuantity() + product.getQuantity());
 				wasAddedToAnotherProduct = true;
@@ -62,7 +62,7 @@ void Storage::assignLocation(Product& product, bool& wasAddedToAnotherProduct) {
 			}
 		}
 	}
-	if(!wasAddedToAnotherProduct){
+	if (!wasAddedToAnotherProduct) {
 		char section = product.getName().toUpper(product.getName()[0]);
 		unsigned shelf = nextEmptyShelf(section);
 		unsigned startPos = 1;
@@ -87,7 +87,7 @@ Vector Storage::findAll(const Product& product) {
 Vector Storage::findAll(const MyString& name) {
 	Vector indexes;
 	for (int i = 0; i < size; i++) {
-		if (products[i].getName().strcmp(name) == 0){
+		if (products[i].getName().strcmp(name) == 0) {
 			indexes.add(i);
 		}
 	}
@@ -129,6 +129,26 @@ void Storage::flush() {
 
 bool Storage::hasEnoughSpaceOnShelf(const Location& location, const size_t quantity) {
 	return quantity <= MAX_SHELF_SIZE - location.getEndPosition();
+}
+
+void Storage::sortIndexesByExpireDate(Vector& indexes) {
+	for (int i = 0; i < indexes.getSize(); i++) {
+		int minIndex = i;
+		for (int j = i; j < indexes.getSize(); j++) {
+			if (products[indexes[minIndex]].getExpireDate() > products[indexes[j]].getExpireDate()) {
+				minIndex = j;
+			}
+		}
+		indexes.swap(indexes[i], indexes[minIndex]);
+	}
+}
+
+int Storage::sumOfProductsQuantity(Vector& indexes) {
+	int sum = 0;
+	for (int i = 0; i < indexes.getSize(); i++) {
+		sum += products[indexes[i]].getQuantity();
+	}
+	return sum;
 }
 
 Storage::Storage() {
@@ -184,8 +204,59 @@ void Storage::retrieveData() {
 	}
 }
 
-void Storage::retrieveProduct(const MyString& name, const size_t& quantity) {
-	
+void Storage::retrieveProduct(const MyString& name, int quantityToTakeOut) {
+	Vector indexes = findAll(name);
+	if (indexes.isEmpty()) {
+		throw "no product with such name!";
+	}
+	sortIndexesByExpireDate(indexes);
+	int sumOfProductsQuantity = this->sumOfProductsQuantity(indexes);
+	bool command = false;
+	if (sumOfProductsQuantity < quantityToTakeOut) {
+		std::cout << "There are only " << sumOfProductsQuantity << " products left of this type: " << std::endl;
+		for (int i = 0; i < indexes.getSize(); i++) {
+			std::cout << products[indexes[i]] << std::endl;
+		}
+		std::cout << "Do you want to take out whats left?" << std::endl;
+		std::cout << "type: 1 - yes		type: 0 - no" << std::endl;
+		std::cin >> command;
+		if (command) {
+			for (int i = 0; i < indexes.getSize(); i++) {
+				products[indexes[i]].setQuantity(0);
+			}
+		}
+	}
+	else {
+		int currentProduct = 0;
+		while (quantityToTakeOut > 0) {
+			if (products[indexes[currentProduct]].getQuantity() <= quantityToTakeOut) {
+				quantityToTakeOut -= products[indexes[currentProduct]].getQuantity();
+				products[indexes[currentProduct]].setQuantity(0);
+			}
+			else {
+				products[indexes[currentProduct]].setQuantity(products[indexes[currentProduct]].getQuantity() - quantityToTakeOut);
+				quantityToTakeOut -= products[indexes[currentProduct]].getQuantity();
+			}
+			currentProduct++;
+		}
+	}
+	if (command) {
+		for (int i = size - 1; i >= 0; i--) {
+			if (products[i].getQuantity() == 0) {
+				removeAt(i);
+			}
+		}
+		flush();
+	}
+}
+
+void Storage::removeAt(int index) {
+	if (index < 0 || index >= size)
+		throw "no such index";
+	for (int i = index; i < size - 1; i++) {
+		products[i] = products[i + 1];
+	}
+	size--;
 }
 
 std::ostream& operator<<(std::ostream& stream, const Storage& storage) {

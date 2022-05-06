@@ -130,8 +130,8 @@ void Vector::clear()
 }
 
 void Vector::sort(){
-	int minIndex = 0;
 	for (int i = 0; i < size; i++){
+		int minIndex = i;
 		for (int j = i; j < size; j++){
 			if (arr[j] < arr[minIndex]) {
 				minIndex = j;
@@ -152,8 +152,8 @@ void Vector::reverse(){
 	for (int i = 0; i < size/2; i++){
 		swap(arr[i], arr[size - 1 - i]);
 	}
-	// åçèê å ðåãóë÷ðåí <=> {a^-1(L)|  e ot sigma*} e krajno
-	// (à^n)^-1(L), ako k != n ---->
+	// Ã¥Ã§Ã¨Ãª Ã¥ Ã°Ã¥Ã£Ã³Ã«Ã·Ã°Ã¥Ã­ <=> {a^-1(L)|  e ot sigma*} e krajno
+	// (Ã ^n)^-1(L), ako k != n ---->
 	// // neka L={a^nb^n|n e ot N}
 	// a^nb^n e ot L => b^n e ot (a^n)^-1(L)
 	// a^kb^n ne e ot L => b^n ne e ot (a^k)-1(l)

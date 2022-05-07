@@ -1,6 +1,5 @@
 #pragma once
 #include<iostream>
-
 class MyString {
 	char* vals;
 	size_t size;
@@ -20,6 +19,9 @@ public:
 	MyString substr(int startIndex, int endIndex) const ;
 	int strcmp(const MyString& other);
 	int atoi(const MyString& str) const ;
+	void strcat(const MyString& str);
+	void replaceAt(int index,const char ch);
+	char* getVals() const;
 	int convertCharToInt(const char ch) const;
 	char toUpper(const char ch);
 	friend std::ostream& operator<<(std::ostream& stream, const MyString& str);

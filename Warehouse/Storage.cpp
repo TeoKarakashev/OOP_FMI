@@ -151,6 +151,9 @@ int Storage::sumOfProductsQuantity(Vector& indexes) {
 	return sum;
 }
 
+
+
+
 Storage::Storage() {
 	products = new Product[2];
 	size = 0;
@@ -259,6 +262,30 @@ void Storage::removeAt(int index) {
 	size--;
 }
 
+void Storage::cleanUp(Date& date) {
+	Vector indexes;
+	for (int i = 0; i < size; i++) {
+		if (date > products[i].getExpireDate() || products[i].getExpireDate().isComingUp(date)) {
+			indexes.add(i);
+		}
+	}
+	MyString name("cleanup-");
+	name.strcat(date.toString());
+	name.strcat(".txt");
+	std::ofstream database(name.getVals());
+	if (!database.is_open()) {
+		throw "failed to open file";
+	}
+	for (int i = 0; i < indexes.getSize(); i++) {
+		database << products[indexes[i]] << std::endl;;
+	}
+	for (int i = indexes.getSize() - 1; i >= 0; i--) {
+		removeAt(indexes[i]);
+	}
+	flush();
+	std::cout << "expiring products were removed and saved in file with name: " << name << std::endl;
+
+}
 std::ostream& operator<<(std::ostream& stream, const Storage& storage) {
 	for (int i = 0; i < storage.size; i++) {
 		stream << storage.products[i] << std::endl;

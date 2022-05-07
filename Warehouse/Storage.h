@@ -22,7 +22,6 @@ class Storage {
 	void sortIndexesByExpireDate(Vector& indexes);
 	int sumOfProductsQuantity(Vector& indexes);
 
-
 public:
 	Storage();
 	Storage(const Storage& other);
@@ -33,6 +32,8 @@ public:
 	void retrieveData();
 	void retrieveProduct(const MyString& name, int quantity);
 	void removeAt(int index);
+	void cleanUp(Date& date);
+	
 
 	friend std::ostream& operator<<(std::ostream& stream, const Storage& products);
 };

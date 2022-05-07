@@ -1,5 +1,13 @@
 #include "Controller.h"
 
+void Controller::clearance(Storage& storage) {
+	Date cleanUpDate;
+	std::cout << "enter date in format \"YYYY-MM-DD\": ";
+	std::cin >> cleanUpDate;
+	storage.cleanUp(cleanUpDate);
+
+}
+
 Product Controller::enterProduct() {
 	MyString name;
 	std::cout << "enter product name: ";
@@ -43,15 +51,10 @@ void Controller::retrieveProduct(Storage& storage) {
 }
 
 void Controller::run() {
-	try {
 		Storage storage;
 		storage.retrieveData();
 		std::cout << storage;
 		//addProduct(storage);
-		retrieveProduct(storage);
+		clearance(storage);
 		std::cout << storage;
-	}
-	catch (char*) {
-		std::cout << "error";
-	}
 }

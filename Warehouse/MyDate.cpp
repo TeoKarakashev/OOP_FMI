@@ -57,6 +57,36 @@ void Date::setDate(const MyString& date) {
 	}
 }
 
+MyString Date::toString() {
+	MyString str("YYYY-MM-DD");
+	int holder = year;
+	for (int i = 3; i >= 0; i--){
+		str.replaceAt(i ,numbersList[holder % 10]);
+		holder /= 10;
+	}
+	holder = month;
+	for (int i = 6; i >= 5; i--) {
+		str.replaceAt(i, numbersList[holder % 10]);
+		holder /= 10;
+	}
+	holder = day;
+	for (int i = 9; i >= 8; i--) {
+		str.replaceAt(i, numbersList[holder % 10]);
+		holder /= 10;
+	}
+	return str;
+}
+
+bool Date::isComingUp(Date date) {
+	date += 8;
+	if (date > *this) {
+		return true;
+	}
+	return false;
+}
+
+
+
 bool Date::operator>(const Date& other) {
 	if (this->year > other.year) {
 		return true;
@@ -88,6 +118,22 @@ bool Date::operator==(const Date& other)
 		return true;
 	}
 	return false;
+}
+
+Date& Date::operator+=(int days) {
+	if (days + day > monthList[month]) {
+		if (month = 12) {
+			month = 1;
+			year++;
+		}
+		else {
+			month++;
+		}
+		this->day = days - (monthList[month] - this->day);
+	}
+	this->day += days;
+
+	return *this;
 }
 
 void Date::parseDate(const MyString& date, int& year, int& month, int& day) {

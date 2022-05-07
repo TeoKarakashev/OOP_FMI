@@ -13,7 +13,8 @@ void MyString::free() {
 }
 
 MyString::MyString() {
-	vals = nullptr;
+	vals = new char[1];
+	vals[0] = '\0';
 	size = 0;
 }
 
@@ -23,7 +24,7 @@ MyString::MyString(const char* vals) {
 	strcpy(this->vals, vals);
 }
 
-MyString::MyString(const MyString& other){
+MyString::MyString(const MyString& other) {
 	copyFrom(other);
 }
 
@@ -43,7 +44,7 @@ char MyString::operator[](int index) const {
 	return vals[index];
 }
 
-MyString::~MyString(){
+MyString::~MyString() {
 	free();
 }
 
@@ -58,7 +59,7 @@ MyString MyString::substr(int startIndex, int endIndex) const {
 
 	char* substr = new char[size + 1];
 	int strSize = 0;
-	for (int i = startIndex; i < endIndex; i++){
+	for (int i = startIndex; i < endIndex; i++) {
 		substr[strSize++] = vals[i];
 	}
 	substr[strSize++] = '\0';
@@ -67,6 +68,7 @@ MyString MyString::substr(int startIndex, int endIndex) const {
 
 int MyString::strcmp(const MyString& other)
 {
+	//ToDo
 	return std::strcmp(this->vals, other.vals);
 }
 
@@ -79,12 +81,40 @@ int MyString::atoi(const MyString& str) const {
 	return res;
 }
 
+void MyString::strcat(const MyString& str) {
+
+	char* newStr = new char[size + str.size + 1];
+	for (int i = 0; i < size; i++) {
+		newStr[i] = vals[i];
+	}
+
+	for (int i = size; i < str.size + size; i++) {
+		newStr[i] = str.vals[i - size];
+	}
+	newStr[str.size + size] = '\0';
+	size = strlen(newStr);
+	delete[] vals;
+	vals = newStr;
+}
+
+void MyString::replaceAt(int index, const char ch) {
+
+	if (index < 0 || index > size - 1) {
+		throw "Invalid Index";
+	}
+	vals[index] = ch;
+}
+
+char* MyString::getVals() const {
+	return vals;
+}
+
 int MyString::convertCharToInt(const char ch) const
 {
 	if (ch < '0' || ch > '9') {
 		throw "invalid char";
 	}
-		return ch - '0';
+	return ch - '0';
 }
 
 char MyString::toUpper(const char ch) {
@@ -99,7 +129,7 @@ std::ostream& operator<<(std::ostream& stream, const MyString& str) {
 	return stream;
 }
 
-std::istream& operator>>(std::istream& stream, MyString& str){
+std::istream& operator>>(std::istream& stream, MyString& str) {
 
 	delete[] str.vals;
 	char buffer[1024];

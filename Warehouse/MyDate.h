@@ -7,7 +7,7 @@ class Date {
 	unsigned day;
 
 	int monthList[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-	char numbersList[10] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+	char numbersList[10] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }; 
 
 	bool isNumber(const char ch);
 	int getIndex(const char ch);
@@ -17,8 +17,11 @@ public:
 	Date(const MyString& date);
 	void parseDate(const MyString& date, int& year, int& month, int& day);
 	void setDate(const MyString& date);
+	MyString toString();
+	bool isComingUp(Date date);
 	bool operator>(const Date& other);
 	bool operator==(const Date& other);
+	Date& operator+=(int days);
 
 	friend std::ostream& operator<<(std::ostream& stream, const Date& date);
 	friend std::istream& operator>>(std::istream& stream, Date& date);

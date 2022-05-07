@@ -7,7 +7,7 @@ class Controller {
 	void addProduct(Storage& storage);
 	void retrieveProduct(Storage& storage);
 	void printProduct();
-	void clearance();
+	void clearance(Storage& storage);
 	Product enterProduct();
 public:
 	void run();

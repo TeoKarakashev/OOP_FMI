@@ -1,5 +1,4 @@
 ﻿#include <iostream>
-#include "MyString.h"
 #include "PriorityQueue.hpp"
 int main()
 {
@@ -27,8 +26,8 @@ int main()
 
 		std::cout << q.peek() << std::endl; // A
 		q.pop();
-		q.pop();
 
+		q.pop();
 	}
 	catch (const std::logic_error& er) {
 		std::cout << er.what() << std::endl;;

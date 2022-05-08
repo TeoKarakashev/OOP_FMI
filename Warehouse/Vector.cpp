@@ -64,7 +64,7 @@ void Vector::add(const int element)
 	size++;
 }
 
-int Vector::getSize() const
+const int Vector::getSize() const
 {
 	return size;
 }

@@ -28,13 +28,13 @@ public:
 	void setLocation(const Location& location);
 	void setComment(const MyString& comment);
 
-	MyString getName() const;
-	Date getEntryDate() const;
-	Date getExpireDate() const;
-	MyString getManufacturer() const;
-	size_t getQuantity() const;
-	Location getLocation() const;
-	MyString getComment() const;
+	const MyString getName() const;
+	const Date getEntryDate() const;
+	const Date getExpireDate() const;
+	const MyString getManufacturer() const;
+	const size_t getQuantity() const;
+	const Location getLocation() const;
+	const MyString getComment() const;
 
 	friend std::ostream& operator<<(std::ostream& stream, const Product& products);
 };

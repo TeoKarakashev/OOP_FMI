@@ -1,16 +1,21 @@
 #pragma once
 #include "Product.h"
 #include "Vector.h"
-
+#include "Log.h"
 class Storage {
 	Product* products;
 	size_t size;
 	size_t capacity;
-	friend class Controller;
+
+	Log* log;
+	size_t logSize;
+	size_t logCapacity;
 
 	void copyFrom(const Storage& other);
 	void free();
 	void resize();
+	void resizeLog();
+
 	Product	parse(const MyString& str);
 	Vector findAllDelimeters(const MyString& str);
 	void assignLocation(Product& product, bool& wasAddedToAnotherProduct);
@@ -29,11 +34,12 @@ public:
 	~Storage();
 
 	void add(Product& product);
+	void addToLog(const Log& product);
 	void retrieveData();
 	void retrieveProduct(const MyString& name, int quantity);
 	void removeAt(int index);
 	void cleanUp(Date& date);
-	
+	void viewLog(const Date& date1, const Date& date2) const;
 
 	friend std::ostream& operator<<(std::ostream& stream, const Storage& products);
 };

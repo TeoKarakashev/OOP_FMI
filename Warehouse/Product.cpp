@@ -53,31 +53,31 @@ void Product::setComment(const MyString& comment) {
 	this->comment = comment;
 }
 
-MyString Product::getName() const {
+const MyString Product::getName() const {
 	return name;
 }
 
-Date Product::getEntryDate() const {
+const Date Product::getEntryDate() const {
 	return entryDate;
 }
 
-Date Product::getExpireDate() const {
+const Date Product::getExpireDate() const {
 	return expireDate;
 }
 
-MyString Product::getManufacturer() const {
+const MyString Product::getManufacturer() const {
 	return manufacturer;
 }
 
-Location Product::getLocation() const {
+const Location Product::getLocation() const {
 	return location;
 }
 
-MyString Product::getComment() const {
+const MyString Product::getComment() const {
 	return comment;
 }
 
-size_t Product::getQuantity() const
+const size_t Product::getQuantity() const
 {
 	return quantity;
 }

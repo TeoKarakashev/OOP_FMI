@@ -19,7 +19,7 @@ public:
 	~Vector();
 
 	void add(const int element);
-	int getSize()const;
+	const int getSize()const;
 	int& operator[](const int index);
 	const int& operator[](int index)const;
 	bool deleteAt(int index);

@@ -18,9 +18,9 @@ public:
 	void parseDate(const MyString& date, int& year, int& month, int& day);
 	void setDate(const MyString& date);
 	MyString toString();
-	bool isComingUp(Date date);
-	bool operator>(const Date& other);
-	bool operator==(const Date& other);
+	bool isComingUp(Date date) const;
+	bool operator>(const Date& other) const;
+	bool operator==(const Date& other) const;
 	Date& operator+=(int days);
 
 	friend std::ostream& operator<<(std::ostream& stream, const Date& date);

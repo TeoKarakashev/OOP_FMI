@@ -48,7 +48,7 @@ MyString::~MyString() {
 	free();
 }
 
-size_t MyString::getSize() const {
+const size_t MyString::getSize() const {
 	return size;
 }
 
@@ -66,7 +66,7 @@ MyString MyString::substr(int startIndex, int endIndex) const {
 	return MyString(substr);
 }
 
-int MyString::strcmp(const MyString& other)
+int MyString::strcmp(const MyString& other) const
 {
 	//ToDo
 	return std::strcmp(this->vals, other.vals);
@@ -105,7 +105,7 @@ void MyString::replaceAt(int index, const char ch) {
 	vals[index] = ch;
 }
 
-char* MyString::getVals() const {
+const char* MyString::getVals() const {
 	return vals;
 }
 
@@ -117,7 +117,7 @@ int MyString::convertCharToInt(const char ch) const
 	return ch - '0';
 }
 
-char MyString::toUpper(const char ch) {
+char MyString::toUpper(const char ch) const {
 	if (ch >= 'a' && ch <= 'z') {
 		return (ch - 'a') + 'A';
 	}

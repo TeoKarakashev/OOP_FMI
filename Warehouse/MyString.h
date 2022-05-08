@@ -15,15 +15,15 @@ public:
 
 	MyString& operator=(const MyString& other);
 	char operator[](int index) const;
-	size_t getSize() const;
+	const size_t getSize() const;
 	MyString substr(int startIndex, int endIndex) const ;
-	int strcmp(const MyString& other);
+	int strcmp(const MyString& other) const;
 	int atoi(const MyString& str) const ;
 	void strcat(const MyString& str);
 	void replaceAt(int index,const char ch);
-	char* getVals() const;
+	const char* getVals() const;
 	int convertCharToInt(const char ch) const;
-	char toUpper(const char ch);
+	char toUpper(const char ch) const;
 	friend std::ostream& operator<<(std::ostream& stream, const MyString& str);
 	friend std::istream& operator>>(std::istream& stream, MyString& str);
 };

@@ -14,19 +14,19 @@ Location::Location(char section, unsigned shelf, unsigned startPosition, unsigne
 	this->endPosition = endPosition;
 }
 
-char Location::getSection() const {
+const char Location::getSection() const {
 	return section;
 }
 
-unsigned Location::getShelf() const {
+const unsigned Location::getShelf() const {
 	return shelf;
 }
 
-unsigned Location::getStartPosition() const {
+const unsigned Location::getStartPosition() const {
 	return startPosition;
 }
 
-unsigned Location::getEndPosition() const {
+const unsigned Location::getEndPosition() const {
 	return endPosition;
 }
 

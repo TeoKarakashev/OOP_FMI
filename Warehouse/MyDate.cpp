@@ -77,7 +77,7 @@ MyString Date::toString() {
 	return str;
 }
 
-bool Date::isComingUp(Date date) {
+bool Date::isComingUp(Date date) const {
 	date += 8;
 	if (date > *this) {
 		return true;
@@ -87,7 +87,7 @@ bool Date::isComingUp(Date date) {
 
 
 
-bool Date::operator>(const Date& other) {
+bool Date::operator>(const Date& other) const{
 	if (this->year > other.year) {
 		return true;
 	}
@@ -112,8 +112,7 @@ bool Date::operator>(const Date& other) {
 	}
 }
 
-bool Date::operator==(const Date& other)
-{
+bool Date::operator==(const Date& other) const {
 	if (year == other.year && month == other.month && day == other.day) {
 		return true;
 	}

@@ -34,10 +34,23 @@ Product Controller::enterProduct() {
 	return Product(name, entryDate, expireDate, manufacturer, quantity, comment);
 }
 
+void Controller::viewLog(Storage& storage) {
+//	Date dateBefore;
+	//std::cout << "enter first date in format \"YYYY-MM-DD\": ";
+	//std::cin >> dateBefore;
+	//Date dateAfter;
+//	std::cout << "enter second date in format \"YYYY-MM-DD\": ";
+	//std::cin >> dateAfter;
+	
+
+}
+
 void Controller::addProduct(Storage& storage) {
 	
 	Product p = enterProduct();
 	storage.add(p);
+	Log l(p.getName(), p.getEntryDate(), p.getLocation(), p.getQuantity(), "add");
+	storage.addToLog(l);
 }
 
 void Controller::retrieveProduct(Storage& storage) {
@@ -53,8 +66,8 @@ void Controller::retrieveProduct(Storage& storage) {
 void Controller::run() {
 		Storage storage;
 		storage.retrieveData();
+		addProduct(storage);
 		std::cout << storage;
-		//addProduct(storage);
-		clearance(storage);
-		std::cout << storage;
+		addProduct(storage);
+		viewLog(storage);
 }

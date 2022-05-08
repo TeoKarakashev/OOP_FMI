@@ -9,10 +9,18 @@ void Storage::copyFrom(const Storage& other) {
 	}
 	size = other.size;
 	capacity = other.capacity;
+
+	log = new Log[other.logCapacity];
+	for (int i = 0; i < other.logSize; i++) {
+		addToLog(other.log[i]);
+	}
+	logSize = other.logSize;
+	logCapacity = other.logCapacity;
 }
 
 void Storage::free() {
 	delete[] products;
+	delete[] log;
 }
 
 void Storage::resize() {
@@ -21,8 +29,18 @@ void Storage::resize() {
 	for (int i = 0; i < size; i++) {
 		temp[i] = products[i];
 	}
-	free();
+	delete[] products;
 	products = temp;
+}
+
+void Storage::resizeLog() {
+	logCapacity *= 2;
+	Log* temp = new Log[logCapacity];
+	for (int i = 0; i < logSize; i++) {
+		temp[i] = log[i];
+	}
+	delete[] log;
+	log = temp;
 }
 
 Product Storage::parse(const MyString& str) {
@@ -52,6 +70,7 @@ Vector Storage::findAllDelimeters(const MyString& str) {
 }
 
 void Storage::assignLocation(Product& product, bool& wasAddedToAnotherProduct) {
+	//ToDO fix if empty shelf take it - 2 takes but 1 is free
 	Vector indexes = findAll(product);
 	if (!indexes.isEmpty()) {
 		for (int i = 0; i < indexes.getSize(); i++) {
@@ -152,12 +171,15 @@ int Storage::sumOfProductsQuantity(Vector& indexes) {
 }
 
 
-
-
 Storage::Storage() {
 	products = new Product[2];
 	size = 0;
 	capacity = 2;
+
+	log = new Log[2];
+	logSize = 0;
+	logCapacity = 2;
+
 }
 
 Storage::Storage(const Storage& other) {
@@ -189,6 +211,13 @@ void Storage::add(Product& product) {
 		products[size++] = product;
 	}
 	flush();
+}
+
+void Storage::addToLog(const Log& curr) {
+	if (logSize == logCapacity) {
+		resizeLog();
+	}
+ 	log[size++] = curr;
 }
 
 void Storage::retrieveData() {
@@ -285,6 +314,11 @@ void Storage::cleanUp(Date& date) {
 	flush();
 	std::cout << "expiring products were removed and saved in file with name: " << name << std::endl;
 
+}
+void Storage::viewLog(const Date& date1, const Date& date2) const {
+	for (int i = 0; i < logSize; i++){
+		std::cout << log[i] << std::endl;
+	}
 }
 std::ostream& operator<<(std::ostream& stream, const Storage& storage) {
 	for (int i = 0; i < storage.size; i++) {

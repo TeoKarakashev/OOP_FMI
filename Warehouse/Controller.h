@@ -9,6 +9,7 @@ class Controller {
 	void printProduct();
 	void clearance(Storage& storage);
 	Product enterProduct();
+	void viewLog(Storage& storage);
 public:
 	void run();
 

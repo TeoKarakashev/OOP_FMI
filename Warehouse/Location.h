@@ -14,10 +14,10 @@ public:
 	Location();
 	Location(char section, unsigned shelf, unsigned startPosition, unsigned endPosition);
 
-	char getSection() const;
-	unsigned getShelf() const;
-	unsigned getStartPosition() const;
-	unsigned getEndPosition() const;
+	const char getSection() const;
+	const unsigned getShelf() const;
+	const unsigned getStartPosition() const;
+	const unsigned getEndPosition() const;
 
 	void setEndPosition(unsigned endPosition);
 	

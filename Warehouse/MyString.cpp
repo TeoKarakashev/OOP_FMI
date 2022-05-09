@@ -134,6 +134,9 @@ std::istream& operator>>(std::istream& stream, MyString& str) {
 	delete[] str.vals;
 	char buffer[1024];
 	stream.getline(buffer, 1024);
+	if (buffer[0] == '\0') {
+		stream.getline(buffer, 1024);
+	}
 	str.size = strlen(buffer);
 	str.vals = new char[str.size + 1];
 	strcpy(str.vals, buffer);

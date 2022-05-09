@@ -76,6 +76,7 @@ void Storage::assignLocation(Product& product, bool& wasAddedToAnotherProduct) {
 		for (int i = 0; i < indexes.getSize(); i++) {
 			if (hasEnoughSpaceOnShelf(products[indexes[i]].getLocation(), product.getQuantity())) {
 				products[indexes[i]].setQuantity(products[indexes[i]].getQuantity() + product.getQuantity());
+				product.setLocation(products[indexes[i]].getLocation());
 				wasAddedToAnotherProduct = true;
 				break;
 			}
@@ -217,7 +218,7 @@ void Storage::addToLog(const Log& curr) {
 	if (logSize == logCapacity) {
 		resizeLog();
 	}
- 	log[size++] = curr;
+	log[logSize++] = curr;
 }
 
 void Storage::retrieveData() {
@@ -228,11 +229,13 @@ void Storage::retrieveData() {
 	char buffer[1024];
 	while (!database.eof()) {
 		database.getline(buffer, 1024);
-		Product p = parse(buffer);
-		if (size == capacity) {
-			resize();
+		if (buffer[0] != '\0') {
+			Product p = parse(buffer);
+			if (size == capacity) {
+				resize();
+			}
+			products[size++] = p;
 		}
-		products[size++] = p;
 	}
 }
 
@@ -254,6 +257,9 @@ void Storage::retrieveProduct(const MyString& name, int quantityToTakeOut) {
 		std::cin >> command;
 		if (command) {
 			for (int i = 0; i < indexes.getSize(); i++) {
+				Log l(products[indexes[i]].getName(), products[indexes[i]].getExpireDate(),
+					products[indexes[i]].getLocation(), products[indexes[i]].getQuantity(), "remove");
+				addToLog(l);
 				products[indexes[i]].setQuantity(0);
 			}
 		}
@@ -262,12 +268,20 @@ void Storage::retrieveProduct(const MyString& name, int quantityToTakeOut) {
 		int currentProduct = 0;
 		while (quantityToTakeOut > 0) {
 			if (products[indexes[currentProduct]].getQuantity() <= quantityToTakeOut) {
+				Log l(products[indexes[currentProduct]].getName(), products[indexes[currentProduct]].getExpireDate(),
+					products[indexes[currentProduct]].getLocation(), products[indexes[currentProduct]].getQuantity(), "remove");
+				addToLog(l);
 				quantityToTakeOut -= products[indexes[currentProduct]].getQuantity();
 				products[indexes[currentProduct]].setQuantity(0);
+				command = true;
 			}
 			else {
-				products[indexes[currentProduct]].setQuantity(products[indexes[currentProduct]].getQuantity() - quantityToTakeOut);
+				Log l(products[indexes[currentProduct]].getName(), products[indexes[currentProduct]].getExpireDate(),
+					products[indexes[currentProduct]].getLocation(), quantityToTakeOut, "remove");
+				addToLog(l);
+				size_t newQuantity = products[indexes[currentProduct]].getQuantity() - quantityToTakeOut;
 				quantityToTakeOut -= products[indexes[currentProduct]].getQuantity();
+				products[indexes[currentProduct]].setQuantity(newQuantity);
 			}
 			currentProduct++;
 		}
@@ -278,8 +292,8 @@ void Storage::retrieveProduct(const MyString& name, int quantityToTakeOut) {
 				removeAt(i);
 			}
 		}
-		flush();
 	}
+	flush();
 }
 
 void Storage::removeAt(int index) {
@@ -309,6 +323,9 @@ void Storage::cleanUp(Date& date) {
 		database << products[indexes[i]] << std::endl;;
 	}
 	for (int i = indexes.getSize() - 1; i >= 0; i--) {
+		Log l(products[indexes[i]].getName(), products[indexes[i]].getExpireDate(),
+			products[indexes[i]].getLocation(), products[indexes[i]].getQuantity(), "remove");
+		addToLog(l);
 		removeAt(indexes[i]);
 	}
 	flush();
@@ -316,7 +333,7 @@ void Storage::cleanUp(Date& date) {
 
 }
 void Storage::viewLog(const Date& date1, const Date& date2) const {
-	for (int i = 0; i < logSize; i++){
+	for (int i = 0; i < logSize; i++) {
 		std::cout << log[i] << std::endl;
 	}
 }

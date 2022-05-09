@@ -9,12 +9,12 @@ void Controller::clearance(Storage& storage) {
 }
 
 Product Controller::enterProduct() {
-	MyString name;
-	std::cout << "enter product name: ";
-	std::cin >> name;
 	Date entryDate;
 	std::cout << "enter product entry date in format \"YYYY-MM-DD\": ";
 	std::cin >> entryDate;
+	MyString name;
+	std::cout << "enter product name: ";
+	std::cin >> name;
 	Date expireDate;
 	std::cout << "enter product expire date in format \"YYYY-MM-DD\": ";
 	std::cin >> expireDate;
@@ -25,28 +25,27 @@ Product Controller::enterProduct() {
 	MyString manufacturer;
 	std::cout << "enter manufacturer name: ";
 	std::cin >> manufacturer;
-	MyString comment;
-	std::cout << "enter comment: ";
-	std::cin >> comment;
 	size_t quantity;
 	std::cout << "enter quantity: ";
 	std::cin >> quantity;
+	MyString comment;
+	std::cout << "enter comment: ";
+	std::cin >> comment;
 	return Product(name, entryDate, expireDate, manufacturer, quantity, comment);
 }
 
 void Controller::viewLog(Storage& storage) {
-//	Date dateBefore;
-	//std::cout << "enter first date in format \"YYYY-MM-DD\": ";
-	//std::cin >> dateBefore;
-	//Date dateAfter;
-//	std::cout << "enter second date in format \"YYYY-MM-DD\": ";
-	//std::cin >> dateAfter;
-	
-
+	Date dateBefore;
+	std::cout << "enter first date in format \"YYYY-MM-DD\": ";
+	std::cin >> dateBefore;
+	Date dateAfter;
+	std::cout << "enter second date in format \"YYYY-MM-DD\": ";
+	std::cin >> dateAfter;
+	storage.viewLog(dateBefore, dateAfter);
 }
 
 void Controller::addProduct(Storage& storage) {
-	
+
 	Product p = enterProduct();
 	storage.add(p);
 	Log l(p.getName(), p.getEntryDate(), p.getLocation(), p.getQuantity(), "add");
@@ -64,10 +63,10 @@ void Controller::retrieveProduct(Storage& storage) {
 }
 
 void Controller::run() {
-		Storage storage;
-		storage.retrieveData();
-		addProduct(storage);
-		std::cout << storage;
-		addProduct(storage);
-		viewLog(storage);
+	//ToDo add command interface
+	Storage storage;
+	storage.retrieveData();
+	clearance(storage);
+	//addProduct(storage);
+	viewLog(storage);
 }

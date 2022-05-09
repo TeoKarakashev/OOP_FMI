@@ -1,4 +1,2 @@
-apple juice|2018-10-09|2025-10-09|teddy|70|A|2|1|70|apple juice
-jelly|2022-05-05|2024-05-05|zaharna fabrika|19|J|1|1|19|random coment
-strawberies|2020-10-09|2023-10-09|Bestconn|50|S|1|1|50|tasty
-apple|2023-05-10|2024-05-20|Foxconn|30|A|2|1|30|some apples
+jelly|2021-02-28|2024-02-29|JellyCo|20|J|1|1|20|gluten free
+apple|2022-10-15|2023-11-12|Foxconn|50|A|2|1|50|best apples

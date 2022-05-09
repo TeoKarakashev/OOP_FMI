@@ -53,7 +53,7 @@ void Date::setDate(const MyString& date) {
 		this->day = day;
 	}
 	else {
-		throw "date must be valid";
+		throw std::exception("date must be valid");
 	}
 }
 
@@ -112,6 +112,34 @@ bool Date::operator>(const Date& other) const{
 	}
 }
 
+bool Date::operator>=(const Date& other) const{
+	if (this->year > other.year) {
+		return true;
+	}
+	else if (this->year < other.year) {
+		return false;
+	}
+	else {
+		if (this->month > other.month) {
+			return true;
+		}
+		else if (this->month < other.month) {
+			return false;
+		}
+		else {
+			if (this->day > other.day) {
+				return true;
+			}
+			else if(this->day < other.day) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+	}
+}
+
 bool Date::operator==(const Date& other) const {
 	if (year == other.year && month == other.month && day == other.day) {
 		return true;
@@ -142,8 +170,7 @@ void Date::parseDate(const MyString& date, int& year, int& month, int& day) {
 			continue;
 		}
 		if (!isNumber(date[i])) {
-			return;
-			throw std::invalid_argument("date must be valid");
+			throw std::exception("date must be valid");
 		}
 		if (i < 4) {
 			year *= 10;

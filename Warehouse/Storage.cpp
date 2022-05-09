@@ -133,7 +133,7 @@ int Storage::nextEmptyShelf(char& section)
 void Storage::flush() {
 	std::ofstream database("storage.txt", std::ios::trunc);
 	if (!database.is_open()) {
-		throw "failed to open database";
+		throw std::exception("failed to open database");
 	}
 	for (int i = 0; i < size; i++) {
 		database << products[i].getName() << "|" << products[i].getEntryDate() << "|"
@@ -224,7 +224,7 @@ void Storage::addToLog(const Log& curr) {
 void Storage::retrieveData() {
 	std::ifstream database("storage.txt");
 	if (!database.is_open()) {
-		throw "failed to load data from database";
+		throw std::exception("failed to load data from database");
 	}
 	char buffer[1024];
 	while (!database.eof()) {
@@ -242,7 +242,7 @@ void Storage::retrieveData() {
 void Storage::retrieveProduct(const MyString& name, int quantityToTakeOut) {
 	Vector indexes = findAll(name);
 	if (indexes.isEmpty()) {
-		throw "no product with such name!";
+		throw std::exception("no product with such name!");
 	}
 	sortIndexesByExpireDate(indexes);
 	int sumOfProductsQuantity = this->sumOfProductsQuantity(indexes);
@@ -298,7 +298,7 @@ void Storage::retrieveProduct(const MyString& name, int quantityToTakeOut) {
 
 void Storage::removeAt(int index) {
 	if (index < 0 || index >= size)
-		throw "no such index";
+		throw std::exception("no such index");
 	for (int i = index; i < size - 1; i++) {
 		products[i] = products[i + 1];
 	}
@@ -317,7 +317,7 @@ void Storage::cleanUp(Date& date) {
 	name.strcat(".txt");
 	std::ofstream database(name.getVals());
 	if (!database.is_open()) {
-		throw "failed to open file";
+		throw std::exception("failed to open file");
 	}
 	for (int i = 0; i < indexes.getSize(); i++) {
 		database << products[indexes[i]] << std::endl;;
@@ -334,7 +334,9 @@ void Storage::cleanUp(Date& date) {
 }
 void Storage::viewLog(const Date& date1, const Date& date2) const {
 	for (int i = 0; i < logSize; i++) {
+		if (log[i].getDate() >= date1 && date2 >= log[i].getDate()) { 
 		std::cout << log[i] << std::endl;
+		}
 	}
 }
 std::ostream& operator<<(std::ostream& stream, const Storage& storage) {

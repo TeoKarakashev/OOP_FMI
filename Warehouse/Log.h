@@ -21,6 +21,8 @@ public:
 	void setQuantity(const size_t& quantity);
 	void setCommand(const MyString& command);
 
+	const Date& getDate() const;
+
 	friend std::ostream& operator<<(std::ostream& stream, const Log& log);
 };
 

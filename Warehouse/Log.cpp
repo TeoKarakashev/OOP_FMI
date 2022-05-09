@@ -37,6 +37,10 @@ void Log::setCommand(const MyString& command) {
 	}
 }
 
+const Date& Log::getDate() const {
+	return date;
+}
+
 std::ostream& operator<<(std::ostream& stream, const Log& log) {
 	stream << log.name << "|" << log.command << "|" << log.quantity << "|" << log.location << "|" << log.date;
 

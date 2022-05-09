@@ -39,7 +39,7 @@ MyString& MyString::operator=(const MyString& other) {
 
 char MyString::operator[](int index) const {
 	if (index < 0 || index >= size) {
-		throw "Invalid index";
+		throw std::exception("Invalid index");
 	}
 	return vals[index];
 }
@@ -54,7 +54,7 @@ const size_t MyString::getSize() const {
 
 MyString MyString::substr(int startIndex, int endIndex) const {
 	if (endIndex < startIndex) {
-		throw "substr cannot have negative size";
+		throw std::exception ("substr cannot have negative size");
 	}
 
 	char* substr = new char[size + 1];
@@ -100,7 +100,7 @@ void MyString::strcat(const MyString& str) {
 void MyString::replaceAt(int index, const char ch) {
 
 	if (index < 0 || index > size - 1) {
-		throw "Invalid Index";
+		throw std::exception("Invalid Index");
 	}
 	vals[index] = ch;
 }
@@ -112,7 +112,7 @@ const char* MyString::getVals() const {
 int MyString::convertCharToInt(const char ch) const
 {
 	if (ch < '0' || ch > '9') {
-		throw "invalid char";
+		throw std::exception("invalid char");
 	}
 	return ch - '0';
 }
@@ -122,6 +122,10 @@ char MyString::toUpper(const char ch) const {
 		return (ch - 'a') + 'A';
 	}
 	return ch;
+}
+
+bool MyString::operator==(const MyString& other) const{
+	return strcmp(other.vals) == 0;
 }
 
 std::ostream& operator<<(std::ostream& stream, const MyString& str) {

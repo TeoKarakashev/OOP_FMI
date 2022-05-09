@@ -44,6 +44,10 @@ void Controller::viewLog(Storage& storage) {
 	storage.viewLog(dateBefore, dateAfter);
 }
 
+void Controller::printData(Storage& storage) {
+	std::cout << storage;
+}
+
 void Controller::addProduct(Storage& storage) {
 
 	Product p = enterProduct();
@@ -63,10 +67,54 @@ void Controller::retrieveProduct(Storage& storage) {
 }
 
 void Controller::run() {
-	//ToDo add command interface
 	Storage storage;
-	storage.retrieveData();
-	clearance(storage);
-	//addProduct(storage);
-	viewLog(storage);
+	try {
+		storage.retrieveData();
+	}
+	catch (const std::exception& er) {
+		std::cout << "failed to load db";
+		return;
+	}
+	std::cout << "storage was successfully loaded!" << std::endl;
+	MyString command;
+	std::cout << "Possible commands:" << std::endl;
+	std::cout << "add - adds product to the warehouse" << std::endl;
+	std::cout << "remove - removes product from the warehouse by quantity" << std::endl;
+	std::cout << "clearence - removes all spoiled products and those who are close to expirining" << std::endl;
+	std::cout << "print - gives you information about everything in the warehouse" << std::endl;
+	std::cout << "log - gives you information about all changes between two dates" << std::endl;
+	std::cout << "close - shut downs the application" << std::endl;
+	std::cin >> command;
+	while (!(command == "close")) {
+		try {
+			if (command == "add") {
+				addProduct(storage);
+				std::cout << "product was added successfully!" << std::endl;
+			}
+			else if (command == "remove") {
+				retrieveProduct(storage);
+				std::cout << "products were removed successfully!" << std::endl;
+			}
+			else if (command == "clearence") {
+				clearance(storage);
+			}
+			else if (command == "print") {
+				printData(storage);
+			}
+			else if (command == "log") {
+				viewLog(storage);
+			}
+			else {
+				std::cout << "Inalid command!" << std::endl;
+			}
+		}
+		catch (const std::exception& er) {
+			std::cout << er.what() << std::endl;
+			std::cout << "command was not executed!" << std::endl;
+		}
+		std::cout << "enter new command: ";
+		std::cin >> command;
+	}
+
+
 }

@@ -20,6 +20,7 @@ public:
 	MyString toString();
 	bool isComingUp(Date date) const;
 	bool operator>(const Date& other) const;
+	bool operator>=(const Date& other) const;
 	bool operator==(const Date& other) const;
 	Date& operator+=(int days);
 

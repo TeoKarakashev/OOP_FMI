@@ -24,6 +24,9 @@ public:
 	const char* getVals() const;
 	int convertCharToInt(const char ch) const;
 	char toUpper(const char ch) const;
+
+	bool operator==(const MyString& other) const;
+
 	friend std::ostream& operator<<(std::ostream& stream, const MyString& str);
 	friend std::istream& operator>>(std::istream& stream, MyString& str);
 };

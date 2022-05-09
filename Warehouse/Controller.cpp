@@ -45,7 +45,8 @@ void Controller::viewLog(Storage& storage) {
 }
 
 void Controller::printData(Storage& storage) {
-	std::cout << storage;
+	storage.printData();
+	//std::cout << storage;
 }
 
 void Controller::addProduct(Storage& storage) {

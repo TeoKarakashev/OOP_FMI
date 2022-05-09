@@ -54,7 +54,7 @@ const size_t MyString::getSize() const {
 
 MyString MyString::substr(int startIndex, int endIndex) const {
 	if (endIndex < startIndex) {
-		throw std::exception ("substr cannot have negative size");
+		throw std::exception("substr cannot have negative size");
 	}
 
 	char* substr = new char[size + 1];
@@ -66,10 +66,15 @@ MyString MyString::substr(int startIndex, int endIndex) const {
 	return MyString(substr);
 }
 
-int MyString::strcmp(const MyString& other) const
-{
-	//ToDo
-	return std::strcmp(this->vals, other.vals);
+int MyString::strcmp(const MyString& other) const {
+	size_t minSize = std::min(this->size, other.size);
+	for (int i = 0; i < minSize; i++) {
+		if (this->vals[i] != other.vals[i]) {
+			return this->vals[i] > other.vals[i] ? 1 : -1;
+		}
+	}
+	return 0;
+
 }
 
 int MyString::atoi(const MyString& str) const {
@@ -124,7 +129,7 @@ char MyString::toUpper(const char ch) const {
 	return ch;
 }
 
-bool MyString::operator==(const MyString& other) const{
+bool MyString::operator==(const MyString& other) const {
 	return strcmp(other.vals) == 0;
 }
 

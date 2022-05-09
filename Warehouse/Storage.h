@@ -37,6 +37,7 @@ public:
 	void addToLog(const Log& product);
 	void retrieveData();
 	void retrieveProduct(const MyString& name, int quantity);
+	void printData();
 	void removeAt(int index);
 	void cleanUp(Date& date);
 	void viewLog(const Date& date1, const Date& date2) const;

@@ -1,6 +1,9 @@
 #pragma once
 #include<exception>
 #include <iostream>
+
+//class made by me during one of the practicums
+//github https://github.com/TeoKarakashev/OOP_FMI/tree/main/vector
 class Vector
 {
 	int* arr;
@@ -12,13 +15,14 @@ class Vector
 	void copyFrom(const Vector& other);
 
 public:
-	void swap(int& i1, int& i2);
 	Vector();
 	Vector(const Vector& other);
 	Vector& operator = (const Vector& other);
 	~Vector();
 
+	void swap(int& i1, int& i2);
 	void add(const int element);
+	void deleteAll();
 	const int getSize()const;
 	int& operator[](const int index);
 	const int& operator[](int index)const;

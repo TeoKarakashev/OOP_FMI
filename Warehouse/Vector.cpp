@@ -15,13 +15,6 @@ void Vector::free() {
 	delete[] arr;
 }
 
-void Vector::swap(int& i1, int& i2) {
-	int temp = i2;
-	i2 = i1;
-	i1 = temp;
-}
-
-
 void Vector::copyFrom(const Vector& other) {
 	size = other.size;
 	capacity = other.capacity;
@@ -55,6 +48,12 @@ Vector::~Vector() {
 	free();
 }
 
+void Vector::swap(int& i1, int& i2) {
+	int temp = i2;
+	i2 = i1;
+	i1 = temp;
+}
+
 void Vector::add(const int element)
 {
 	if (capacity == size) {
@@ -62,6 +61,13 @@ void Vector::add(const int element)
 	}
 	arr[size] = element;
 	size++;
+}
+
+void Vector::deleteAll() {
+	free();
+	arr = new int[2];
+	size = 0;
+	capacity = 2;
 }
 
 const int Vector::getSize() const

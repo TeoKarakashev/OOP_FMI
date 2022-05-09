@@ -52,7 +52,7 @@ Product Storage::parse(const MyString& str) {
 	size_t quantity = str.atoi(str.substr(delimeters[3] + 1, delimeters[4]));
 	char section = str.substr(delimeters[4] + 1, delimeters[5])[0];
 	unsigned shelf = str.atoi(str.substr(delimeters[5] + 1, delimeters[6]));
-	unsigned startPos = str.atoi(str.substr(delimeters[6] + 1, delimeters[7]));//ToDO make it volume
+	unsigned startPos = str.atoi(str.substr(delimeters[6] + 1, delimeters[7]));
 	unsigned endPos = str.atoi(str.substr(delimeters[7] + 1, delimeters[8]));
 	Location location(section, shelf, startPos, endPos);
 	MyString comment = str.substr(delimeters[8] + 1, str.getSize());
@@ -70,7 +70,6 @@ Vector Storage::findAllDelimeters(const MyString& str) {
 }
 
 void Storage::assignLocation(Product& product, bool& wasAddedToAnotherProduct) {
-	//ToDO fix if empty shelf take it - 2 takes but 1 is free
 	Vector indexes = findAll(product);
 	if (!indexes.isEmpty()) {
 		for (int i = 0; i < indexes.getSize(); i++) {
@@ -116,18 +115,30 @@ Vector Storage::findAll(const MyString& name) {
 
 int Storage::nextEmptyShelf(char& section)
 {
+	Vector shelfs;
 	int count = 1;
 	for (int i = 0; i < size; i++) {
 		if (products[i].getLocation().getSection() == section) {
+			shelfs.add(products[i].getLocation().getShelf());
 			count++;
 		}
 		if (count > MAX_SHLEFS_IN_SECTION) {
+			shelfs.deleteAll();
 			count = 1;
 			section++;
 			i = 0;
 		}
 	}
-	return count;
+	if (shelfs.isEmpty()) {
+		return 1;
+	}
+	shelfs.sort();
+	for (int i = 0; i < shelfs.getSize(); i++) {
+		if (shelfs[i] != i + 1) {
+			return (i + 1);
+		}
+	}
+	return shelfs.getSize() + 1;
 }
 
 void Storage::flush() {
@@ -296,6 +307,29 @@ void Storage::retrieveProduct(const MyString& name, int quantityToTakeOut) {
 	flush();
 }
 
+void Storage::printData() {
+	Vector* indexesWithSameNames = new Vector[size];
+	int sizeOfArray = 0;
+	for (int i = 0; i < size; i++){
+		bool wasAdded = false;
+		for (int j = 0; j < sizeOfArray; j++){
+			if (products[i].getName() == products[indexesWithSameNames[j][0]].getName()) {
+				indexesWithSameNames[j].add(i);
+				wasAdded = true;
+			}
+		}
+		if (!wasAdded) {
+		indexesWithSameNames[sizeOfArray++].add(i);
+		}
+	}
+	 
+	for (int i = 0; i < sizeOfArray; i++){
+		std::cout << products[indexesWithSameNames[i][0]].getName() << "|" << sumOfProductsQuantity(indexesWithSameNames[i])<<std::endl;
+	}
+
+	delete[] indexesWithSameNames;
+}
+
 void Storage::removeAt(int index) {
 	if (index < 0 || index >= size)
 		throw std::exception("no such index");
@@ -334,8 +368,8 @@ void Storage::cleanUp(Date& date) {
 }
 void Storage::viewLog(const Date& date1, const Date& date2) const {
 	for (int i = 0; i < logSize; i++) {
-		if (log[i].getDate() >= date1 && date2 >= log[i].getDate()) { 
-		std::cout << log[i] << std::endl;
+		if (log[i].getDate() >= date1 && date2 >= log[i].getDate()) {
+			std::cout << log[i] << std::endl;
 		}
 	}
 }

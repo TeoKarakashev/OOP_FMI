@@ -16,7 +16,7 @@ public:
 	MyString& operator=(const MyString& other);
 	char operator[](int index) const;
 	const size_t getSize() const;
-	MyString substr(int startIndex, int endIndex) const ;
+	MyString substr(int startIndex, int endIndex) const;
 	int strcmp(const MyString& other) const;
 	int atoi(const MyString& str) const ;
 	void strcat(const MyString& str);

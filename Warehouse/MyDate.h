@@ -32,7 +32,7 @@ public:
 	//! Setter for date
 	void setDate(const MyString& date);
 	//! Parses Date to String
-	MyString toString();
+	MyString toString() const;
 	//! returns whether the date is in a week of a given date or before the given date
 	bool isComingUp(Date date) const;
 	//! Implemetation for the > operator

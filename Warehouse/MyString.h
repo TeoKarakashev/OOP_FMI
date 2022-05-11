@@ -50,6 +50,8 @@ public:
 
 	//! Implementation for the == operator
 	bool operator==(const MyString& other) const;
+	//! Implementation for the != operator
+	bool operator!=(const MyString& other) const;
 	//! Implementation for the << operator
 	friend std::ostream& operator<<(std::ostream& stream, const MyString& str);
 	//! Implementation for the >> operator

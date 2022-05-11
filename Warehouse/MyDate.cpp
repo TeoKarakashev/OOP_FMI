@@ -57,7 +57,7 @@ void Date::setDate(const MyString& date) {
 	}
 }
 
-MyString Date::toString() {
+MyString Date::toString() const {
 	MyString str("YYYY-MM-DD");
 	int holder = year;
 	for (int i = 3; i >= 0; i--){
@@ -78,7 +78,7 @@ MyString Date::toString() {
 }
 
 bool Date::isComingUp(Date date) const {
-	date += 8;
+	date += 5;
 	if (date > *this) {
 		return true;
 	}

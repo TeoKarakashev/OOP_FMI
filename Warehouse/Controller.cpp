@@ -1,6 +1,9 @@
 #include "Controller.h"
 
 void Controller::clearance(Storage& storage) {
+	if (storage.isStorageEmpty()) {
+		throw std::exception("Storage is empty!");
+	}
 	Date cleanUpDate;
 	std::cout << "enter date in format \"YYYY-MM-DD\": ";
 	std::cin >> cleanUpDate;
@@ -25,16 +28,23 @@ Product Controller::enterProduct() {
 	MyString manufacturer;
 	std::cout << "enter manufacturer name: ";
 	std::cin >> manufacturer;
-	size_t quantity;
+	int quantity;
 	std::cout << "enter quantity: ";
 	std::cin >> quantity;
+	while (quantity < 1) {
+		std::cout << "quantity must be valid, enter new quantity: ";
+		std::cin >> quantity;
+	}
 	MyString comment;
 	std::cout << "enter comment: ";
 	std::cin >> comment;
 	return Product(name, entryDate, expireDate, manufacturer, quantity, comment);
 }
 
-void Controller::viewLog(Storage& storage) {
+void Controller::viewLog(const Storage& storage) const {
+	if (storage.isLogEmpty()) {
+		throw std::exception("Log is empty!");
+	}
 	Date dateBefore;
 	std::cout << "enter first date in format \"YYYY-MM-DD\": ";
 	std::cin >> dateBefore;
@@ -44,9 +54,11 @@ void Controller::viewLog(Storage& storage) {
 	storage.viewLog(dateBefore, dateAfter);
 }
 
-void Controller::printData(Storage& storage) {
+void Controller::printData(const Storage& storage) const {
+	if (storage.isStorageEmpty()) {
+		throw std::exception("Storage is empty!");
+	}
 	storage.printData();
-	//std::cout << storage;
 }
 
 void Controller::addProduct(Storage& storage) {
@@ -58,6 +70,9 @@ void Controller::addProduct(Storage& storage) {
 }
 
 void Controller::retrieveProduct(Storage& storage) {
+	if (storage.isStorageEmpty()) {
+		throw std::exception("Storage is empty!");
+	}
 	MyString name;
 	std::cout << "enter product name: ";
 	std::cin >> name;
@@ -82,11 +97,15 @@ void Controller::run() {
 	std::cout << "add - adds product to the warehouse" << std::endl;
 	std::cout << "remove - removes product from the warehouse by quantity" << std::endl;
 	std::cout << "clearence - removes all spoiled products and those who are close to expirining" << std::endl;
-	std::cout << "print - gives you information about everything in the warehouse" << std::endl;
+	std::cout << "print - gives you information about the products and their quantity in the warehouse" << std::endl;
+	std::cout << "print as admin - gives you all available information about the products in the warehouse" << std::endl;
 	std::cout << "log - gives you information about all changes between two dates" << std::endl;
+	std::cout << "help - gives you list of possible commands" << std::endl;
+	std::cout << "clear - clears the console" << std::endl;
 	std::cout << "close - shut downs the application" << std::endl;
+	std::cout << "enter new command: ";
 	std::cin >> command;
-	while (!(command == "close")) {
+	while (command != "close") {
 		try {
 			if (command == "add") {
 				addProduct(storage);
@@ -102,8 +121,28 @@ void Controller::run() {
 			else if (command == "print") {
 				printData(storage);
 			}
+			else if (command == "print as admin") {
+				std::cout << storage;
+			}
 			else if (command == "log") {
 				viewLog(storage);
+			}
+			//saw it on Stackoverflow
+			//https://stackoverflow.com/questions/6486289/how-can-i-clear-console
+			else if (command == "clear") {
+				std::cout << "\x1B[2J\x1B[H";
+			}
+			else if (command == "help") {
+				std::cout << "Possible commands:" << std::endl;
+				std::cout << "add - adds product to the warehouse" << std::endl;
+				std::cout << "remove - removes product from the warehouse by quantity" << std::endl;
+				std::cout << "clearence - removes all spoiled products and those who are close to expirining" << std::endl;
+				std::cout << "print - gives you information about the products and their quantity in the warehouse" << std::endl;
+				std::cout << "print as admin - gives you all available information about the products in the warehouse" << std::endl;
+				std::cout << "log - gives you information about all changes between two dates" << std::endl;
+				std::cout << "help - gives you list of possible commands" << std::endl;
+				std::cout << "clear - clears the console" << std::endl;
+				std::cout << "close - shut downs the application" << std::endl;
 			}
 			else {
 				std::cout << "Inalid command!" << std::endl;

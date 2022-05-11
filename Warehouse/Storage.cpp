@@ -59,7 +59,7 @@ Product Storage::parse(const MyString& str) {
 	return Product(name, entryDate, expireDate, manufacturer, quantity, location, comment);
 }
 
-Vector Storage::findAllDelimeters(const MyString& str) {
+Vector Storage::findAllDelimeters(const MyString& str) const {
 	Vector delimeters;
 	for (size_t i = 0; i < str.getSize(); i++) {
 		if (str[i] == '|') {
@@ -69,7 +69,7 @@ Vector Storage::findAllDelimeters(const MyString& str) {
 	return delimeters;
 }
 
-void Storage::assignLocation(Product& product, bool& wasAddedToAnotherProduct) {
+void Storage::assignLocation(Product& product, bool& wasAddedToAnotherProduct) const {
 	Vector indexes = findAll(product);
 	if (!indexes.isEmpty()) {
 		for (int i = 0; i < indexes.getSize(); i++) {
@@ -91,7 +91,7 @@ void Storage::assignLocation(Product& product, bool& wasAddedToAnotherProduct) {
 	}
 }
 
-Vector Storage::findAll(const Product& product) {
+Vector Storage::findAll(const Product& product) const {
 	Vector indexes;
 	for (int i = 0; i < size; i++) {
 		if (products[i].getName().strcmp(product.getName()) == 0 &&
@@ -103,7 +103,7 @@ Vector Storage::findAll(const Product& product) {
 }
 
 
-Vector Storage::findAll(const MyString& name) {
+Vector Storage::findAll(const MyString& name) const {
 	Vector indexes;
 	for (int i = 0; i < size; i++) {
 		if (products[i].getName().strcmp(name) == 0) {
@@ -113,8 +113,7 @@ Vector Storage::findAll(const MyString& name) {
 	return indexes;
 }
 
-int Storage::nextEmptyShelf(char& section)
-{
+int Storage::nextEmptyShelf(char& section) const {
 	Vector shelfs;
 	int count = 1;
 	for (int i = 0; i < size; i++) {
@@ -158,11 +157,11 @@ void Storage::flush() {
 	}
 }
 
-bool Storage::hasEnoughSpaceOnShelf(const Location& location, const size_t quantity) {
+bool Storage::hasEnoughSpaceOnShelf(const Location& location, const size_t quantity) const {
 	return quantity <= MAX_SHELF_SIZE - location.getEndPosition();
 }
 
-void Storage::sortIndexesByExpireDate(Vector& indexes) {
+void Storage::sortIndexesByExpireDate(Vector& indexes) const {
 	for (int i = 0; i < indexes.getSize(); i++) {
 		int minIndex = i;
 		for (int j = i; j < indexes.getSize(); j++) {
@@ -174,12 +173,20 @@ void Storage::sortIndexesByExpireDate(Vector& indexes) {
 	}
 }
 
-int Storage::sumOfProductsQuantity(Vector& indexes) {
+int Storage::sumOfProductsQuantity(Vector& indexes) const {
 	int sum = 0;
 	for (int i = 0; i < indexes.getSize(); i++) {
 		sum += products[indexes[i]].getQuantity();
 	}
 	return sum;
+}
+
+bool Storage::isStorageEmpty() const {
+	return size == 0;
+}
+
+bool Storage::isLogEmpty() const {
+	return logSize == 0;
 }
 
 
@@ -211,6 +218,9 @@ Storage::~Storage() {
 }
 
 void Storage::add(Product& product) {
+	if (product.getQuantity() > MAX_SHELF_SIZE) {
+		throw std::exception("Product is too big and cannot be added");
+	}
 	bool wasAddedToAnotherProduct = false;
 
 	if (size == capacity) {
@@ -307,24 +317,24 @@ void Storage::retrieveProduct(const MyString& name, int quantityToTakeOut) {
 	flush();
 }
 
-void Storage::printData() {
+void Storage::printData() const {
 	Vector* indexesWithSameNames = new Vector[size];
 	int sizeOfArray = 0;
-	for (int i = 0; i < size; i++){
+	for (int i = 0; i < size; i++) {
 		bool wasAdded = false;
-		for (int j = 0; j < sizeOfArray; j++){
+		for (int j = 0; j < sizeOfArray; j++) {
 			if (products[i].getName() == products[indexesWithSameNames[j][0]].getName()) {
 				indexesWithSameNames[j].add(i);
 				wasAdded = true;
 			}
 		}
 		if (!wasAdded) {
-		indexesWithSameNames[sizeOfArray++].add(i);
+			indexesWithSameNames[sizeOfArray++].add(i);
 		}
 	}
-	 
-	for (int i = 0; i < sizeOfArray; i++){
-		std::cout << products[indexesWithSameNames[i][0]].getName() << "|" << sumOfProductsQuantity(indexesWithSameNames[i])<<std::endl;
+
+	for (int i = 0; i < sizeOfArray; i++) {
+		std::cout << products[indexesWithSameNames[i][0]].getName() << "|" << sumOfProductsQuantity(indexesWithSameNames[i]) << std::endl;
 	}
 
 	delete[] indexesWithSameNames;
@@ -374,6 +384,9 @@ void Storage::viewLog(const Date& date1, const Date& date2) const {
 	}
 }
 std::ostream& operator<<(std::ostream& stream, const Storage& storage) {
+	if (storage.isStorageEmpty()) {
+		throw std::exception("Storage is empty!");
+	}
 	for (int i = 0; i < storage.size; i++) {
 		stream << storage.products[i] << std::endl;
 	}

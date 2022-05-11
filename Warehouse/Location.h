@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-static unsigned MAX_SHELF_SIZE = 100;
+static unsigned MAX_SHELF_SIZE = 1000;
 static unsigned MAX_SHLEFS_IN_SECTION = 12;
 
 //! class that stores the location
@@ -10,9 +10,9 @@ class Location {
 	char section;
 	//! Coresponds to which shelf the product is
 	unsigned shelf;
-	//! Cortesponds to the starting position on the given shelf
+	//! Coresponds to the starting position on the given shelf
 	unsigned startPosition;
-	//! Cortesponds to the end position on the given shelf
+	//! Coresponds to the end position on the given shelf
 	unsigned endPosition;
 
 public:

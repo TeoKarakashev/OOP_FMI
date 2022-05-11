@@ -6,7 +6,7 @@
 class Controller {
 
 	//! Prints all available information from the storage
-	void printData(Storage& storage);
+	void printData(const Storage& storage) const;
 	//! adds valid product to the storage
 	void addProduct(Storage& storage);
 	//! Removes product by name and quantity
@@ -16,7 +16,7 @@ class Controller {
 	//! User has to enter a product
 	Product enterProduct();
 	//! Displayes all the changes to the storage in a given period of time
-	void viewLog(Storage& storage);
+	void viewLog(const Storage& storage) const ;
 public:
 	//! starts the application
 	void run();

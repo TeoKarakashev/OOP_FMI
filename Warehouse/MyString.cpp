@@ -73,7 +73,13 @@ int MyString::strcmp(const MyString& other) const {
 			return this->vals[i] > other.vals[i] ? 1 : -1;
 		}
 	}
-	return 0;
+	if (this->size == other.size) {
+		return 0;
+	}
+	else if(this->size > other.size) {
+		return 1;
+	}
+	return -1;
 
 }
 
@@ -131,6 +137,11 @@ char MyString::toUpper(const char ch) const {
 
 bool MyString::operator==(const MyString& other) const {
 	return strcmp(other.vals) == 0;
+}
+
+bool MyString::operator!=(const MyString& other) const
+{
+	return strcmp(other.vals) != 0;
 }
 
 std::ostream& operator<<(std::ostream& stream, const MyString& str) {
